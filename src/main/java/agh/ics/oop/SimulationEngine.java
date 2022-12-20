@@ -5,8 +5,8 @@ public class SimulationEngine {
 
     public SimulationEngine(int mapVariant){
         switch (mapVariant){
-            case 1: this.map = new GlobeMap();
-            case 2: this.map =new HellishMap();
+            case 1 -> this.map = new GlobeMap();
+            case 2 -> this.map = new HellishMap();
         }
     }
 

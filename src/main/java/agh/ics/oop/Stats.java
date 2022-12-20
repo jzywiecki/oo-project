@@ -1,6 +1,4 @@
 package agh.ics.oop;
 
-public class Animal {
-
-
+public class Stats {
 }
