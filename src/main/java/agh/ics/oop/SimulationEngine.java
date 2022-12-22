@@ -13,8 +13,8 @@ public class SimulationEngine {
 
     public SimulationEngine(MapVariant mapVariant){
         switch (mapVariant){
-            case GLOBE_MAP: this.map = new GlobeMap(b1, b2);
-            case HELLISH_MAP: this.map =new HellishMap(b1, b2);
+            case GLOBE_MAP -> this.map = new GlobeMap(b1, b2);
+            case HELLISH_MAP -> this.map =new HellishMap(b1, b2);
         }
 
 
