@@ -2,6 +2,14 @@ package agh.ics.oop;
 
 public class World {
     public static void main(String[] args) {
-        System.out.println("Hello world");
+        var engine = new SimulationEngine(MapVariant.GLOBE_MAP);
+
+        try{
+            engine.run();
+        }catch (IllegalArgumentException err){
+            System.out.println(err);
+            System.exit(-2);
+        }
+
     }
 }
