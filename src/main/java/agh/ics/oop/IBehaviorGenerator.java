@@ -6,4 +6,6 @@ package agh.ics.oop;
 
 
 public interface IBehaviorGenerator {
+
+    MapDirection turn();
 }
