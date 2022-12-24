@@ -1,4 +1,5 @@
 package agh.ics.oop;
+import agh.ics.oop.animal.Animal;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

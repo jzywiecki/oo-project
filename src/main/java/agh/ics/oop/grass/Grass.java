@@ -1,4 +1,6 @@
-package agh.ics.oop;
+package agh.ics.oop.grass;
+
+import agh.ics.oop.Vector2d;
 
 import java.util.Objects;
 
@@ -8,6 +10,7 @@ public record Grass(Vector2d position){
     public String toString() {
         return "*";
     }
+
 
     @Override
     public boolean equals(Object o) {
