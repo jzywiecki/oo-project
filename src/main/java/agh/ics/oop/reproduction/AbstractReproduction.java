@@ -2,8 +2,12 @@ package agh.ics.oop.reproduction;
 
 
 
+import agh.ics.oop.MapDirection;
+import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.animal.AnimalComparator;
+import agh.ics.oop.interfaces.IBehaviorGenerator;
+import agh.ics.oop.interfaces.IWorldMap;
 
 import java.util.Random;
 
@@ -12,6 +16,16 @@ import static agh.ics.oop.SimulationVariables.minMutations;
 
 
 public abstract class AbstractReproduction {
+    MapDirection direction;
+    IWorldMap map;
+    IBehaviorGenerator behavior;
+
+    public AbstractReproduction(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior) {
+        this.direction = direction;
+        this.behavior = behavior;
+        this.map = map;
+    }
+
     //Obliczenie udziału zwierzęcia przy tworzeniu potomka
     private int calculatePart(Animal parent1, Animal parent2){
         return (parent1.getEnergy() / (parent1.getEnergy() + parent2.getEnergy())) + parent1.getEnergy()>parent2.getEnergy()? 1 : 0;
@@ -60,7 +74,7 @@ public abstract class AbstractReproduction {
 
     //stworzenie zwierzęcia z gotowym genomem i energią
     private Animal createAnimal(Animal parent1, Animal parent2){
-        Animal child = new Animal(parent1.getPosition(), 2*energyToReproduction, createGenom(parent1, parent2));
+        Animal child = new Animal(direction, parent1.position(), map, createGenom(parent1, parent2), behavior, 2*energyToReproduction);
         return child;
     }
 }

@@ -1,4 +1,7 @@
 package agh.ics.oop;
+
+import agh.ics.oop.reproduction.MutationVariant;
+
 import java.util.Properties;
 
 public class OptionsParser {

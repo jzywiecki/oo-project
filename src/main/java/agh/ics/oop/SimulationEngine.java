@@ -3,6 +3,9 @@ package agh.ics.oop;
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import agh.ics.oop.animal.Animal;
+import agh.ics.oop.interfaces.IWorldMap;
+
 public class SimulationEngine {
     private IWorldMap map;
     private final LinkedList<Animal> animals = new LinkedList<>();
