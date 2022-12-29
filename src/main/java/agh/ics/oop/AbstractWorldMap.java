@@ -1,9 +1,17 @@
 package agh.ics.oop;
+import agh.ics.oop.animal.Animal;
+import agh.ics.oop.interfaces.IGrassGenerator;
+import agh.ics.oop.interfaces.IMapElement;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
+import agh.ics.oop.interfaces.IWorldMap;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
+
+
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     protected Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
     protected final Vector2d upperBound;

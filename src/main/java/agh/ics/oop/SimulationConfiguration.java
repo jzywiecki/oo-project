@@ -1,5 +1,7 @@
 package agh.ics.oop;
 
+import agh.ics.oop.reproduction.MutationVariant;
+
 public record SimulationConfiguration(
 //    wysokość i szerokość mapy,
         Vector2d bounds,

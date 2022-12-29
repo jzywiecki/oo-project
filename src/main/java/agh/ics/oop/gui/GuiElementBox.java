@@ -1,4 +1,5 @@
-package agh.ics.oop;
+package agh.ics.oop.gui;
+import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
