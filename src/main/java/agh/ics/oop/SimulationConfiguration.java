@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import agh.ics.oop.behavior.BehaviorVariant;
 import agh.ics.oop.reproduction.MutationVariant;
 
 public record SimulationConfiguration(
@@ -33,6 +34,8 @@ public record SimulationConfiguration(
 //    wariant zachowania zwierzaków (wyjaśnione w sekcji poniżej),
         BehaviorVariant behavior
 ) {
+
+
     @Override
     public String toString() {
         return "SimulationConfiguration{" +

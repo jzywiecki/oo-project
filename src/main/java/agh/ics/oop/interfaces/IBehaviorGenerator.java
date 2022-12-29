@@ -7,5 +7,5 @@ import agh.ics.oop.MapDirection;
 
 public interface IBehaviorGenerator {
 
-    MapDirection turn();
+    int turn(int activeGene, int genomsLength);
 }

@@ -15,7 +15,7 @@ public class Animal implements IMapElement {
     private final ArrayList<IPositionChangeObserver> observerList = new ArrayList<>();
     private final IBehaviorGenerator behavior;
     private final int[] genoms;
-    private int activeGene = 0;
+    protected int activeGene = 0;
 
     private MapDirection direction;
     private Vector2d position;
@@ -67,9 +67,8 @@ public class Animal implements IMapElement {
 
 
     public void move(){
-        //direction = behavior.turn();
-        direction = direction.add(2);
-
+        activeGene = behavior.turn(activeGene, genoms.length);
+        direction = MapDirection.values()[activeGene];
         Vector2d newPosition = map.moveAnimal(this, direction);
         for (IPositionChangeObserver observer : observerList) {
             observer.positionChanged(position, newPosition, this);

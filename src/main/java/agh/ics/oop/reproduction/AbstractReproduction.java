@@ -3,6 +3,7 @@ package agh.ics.oop.reproduction;
 
 
 import agh.ics.oop.MapDirection;
+import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.animal.AnimalComparator;
@@ -11,19 +12,21 @@ import agh.ics.oop.interfaces.IWorldMap;
 
 import java.util.Random;
 
-import static agh.ics.oop.SimulationVariables.*;
-import static agh.ics.oop.SimulationVariables.minMutations;
+import static agh.ics.oop.SimulationConfiguration.*;
+
 
 
 public abstract class AbstractReproduction {
     MapDirection direction;
     IWorldMap map;
     IBehaviorGenerator behavior;
+    SimulationConfiguration config;
 
-    public AbstractReproduction(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior) {
+    public AbstractReproduction(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
         this.direction = direction;
         this.behavior = behavior;
         this.map = map;
+        this.config = config;
     }
 
     //Obliczenie udziału zwierzęcia przy tworzeniu potomka
@@ -33,7 +36,7 @@ public abstract class AbstractReproduction {
 
     //tworzenie genomu
     private int[] createGenom(Animal parent1, Animal parent2) {
-        int[] genom = new int[genomsLength];
+        int[] genom = new int[config.genomsLength()];
         Random rand = new Random();
         int site = rand.nextInt(2); //0 - left, 1 - right
 
@@ -54,18 +57,18 @@ public abstract class AbstractReproduction {
 
             if (calculatePart(strongerAnimal, weakerAnimal) >= 0)
                 System.arraycopy(strongerAnimalGenom, 0, genom, 0, calculatePart(strongerAnimal, weakerAnimal));
-            if (genomsLength - calculatePart(strongerAnimal, weakerAnimal) >= 0)
-                System.arraycopy(weakerAnimalGenom, calculatePart(strongerAnimal, weakerAnimal), genom, calculatePart(strongerAnimal, weakerAnimal), genomsLength - calculatePart(strongerAnimal, weakerAnimal));
+            if (config.genomsLength() - calculatePart(strongerAnimal, weakerAnimal) >= 0)
+                System.arraycopy(weakerAnimalGenom, calculatePart(strongerAnimal, weakerAnimal), genom, calculatePart(strongerAnimal, weakerAnimal), config.genomsLength() - calculatePart(strongerAnimal, weakerAnimal));
         }
         else {
             if (calculatePart(weakerAnimal, strongerAnimal) >= 0)
                 System.arraycopy(weakerAnimalGenom, 0, genom, 0, calculatePart(weakerAnimal, strongerAnimal));
-            if (genomsLength - calculatePart(weakerAnimal, strongerAnimal) >= 0)
-                System.arraycopy(strongerAnimalGenom, calculatePart(weakerAnimal, strongerAnimal), genom, calculatePart(weakerAnimal, strongerAnimal), genomsLength - calculatePart(weakerAnimal, strongerAnimal));
+            if (config.genomsLength() - calculatePart(weakerAnimal, strongerAnimal) >= 0)
+                System.arraycopy(strongerAnimalGenom, calculatePart(weakerAnimal, strongerAnimal), genom, calculatePart(weakerAnimal, strongerAnimal), config.genomsLength() - calculatePart(weakerAnimal, strongerAnimal));
         }
 
 
-        mutate(genom, rand.nextInt((maxMutations - minMutations) + 1) + minMutations);
+        mutate(genom, rand.nextInt((config.maxMutations() - config.minMutations()) + 1) + config.minMutations());
         return genom;
     }
 
@@ -74,7 +77,7 @@ public abstract class AbstractReproduction {
 
     //stworzenie zwierzęcia z gotowym genomem i energią
     private Animal createAnimal(Animal parent1, Animal parent2){
-        Animal child = new Animal(direction, parent1.position(), map, createGenom(parent1, parent2), behavior, 2*energyToReproduction);
+        Animal child = new Animal(direction, parent1.position(), map, createGenom(parent1, parent2), behavior, 2*config.energyToReproduction());
         return child;
     }
 }
