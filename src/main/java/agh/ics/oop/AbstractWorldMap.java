@@ -53,7 +53,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     @Override
     public IMapElement objectAt(Vector2d position){
         if(mapElements.containsKey(position)){
-            return new Animal(MapDirection.NORTH, new Vector2d(3, 3), this, null, null);
+            return new Animal(MapDirection.NORTH, new Vector2d(3, 3), this, null, null, 20);
         }
         return null;
     }

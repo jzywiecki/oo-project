@@ -9,6 +9,7 @@ import agh.ics.oop.interfaces.IWorldMap;
 public class SimulationEngine {
     private IWorldMap map;
     private final LinkedList<Animal> animals = new LinkedList<>();
+    private SimulationConfiguration configuration;
 
     //remove later
     private final Vector2d b1 = new Vector2d(0,0);
@@ -56,7 +57,7 @@ public class SimulationEngine {
             if(map.isOccupied(new Vector2d(x, y))){
                 i--;
             }else {
-                Animal animal = new Animal( MapDirection.NORTH, new Vector2d(x,y), map, null, null);
+                Animal animal = new Animal( MapDirection.NORTH, new Vector2d(x,y), map, null, null, configuration.startingEnergy());
                 map.place(animal);
                 this.animals.add(animal);
             }

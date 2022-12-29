@@ -1,12 +1,21 @@
 package agh.ics.oop.reproduction;
 
 
+import agh.ics.oop.MapDirection;
+import agh.ics.oop.SimulationConfiguration;
+import agh.ics.oop.interfaces.IBehaviorGenerator;
+import agh.ics.oop.interfaces.IWorldMap;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class FullRandomness extends AbstractReproduction {
+    public FullRandomness(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
+        super(direction, map, behavior, config);
+    }
+
     @Override
     int[] mutate(int[] genom, int mutationsNumber) {
         List<Integer> genoms = new ArrayList<>();
