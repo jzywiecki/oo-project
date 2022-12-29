@@ -1,6 +1,6 @@
 package agh.ics.oop.interfaces;
 
-import agh.ics.oop.MapDirection;
+import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.Vector2d;
 

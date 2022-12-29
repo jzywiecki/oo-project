@@ -2,9 +2,9 @@ package agh.ics.oop.reproduction;
 
 
 
-import agh.ics.oop.MapDirection;
+import agh.ics.oop.interfaces.IReproduction;
+import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
-import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.animal.AnimalComparator;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
@@ -12,11 +12,8 @@ import agh.ics.oop.interfaces.IWorldMap;
 
 import java.util.Random;
 
-import static agh.ics.oop.SimulationConfiguration.*;
 
-
-
-public abstract class AbstractReproduction {
+public abstract class AbstractReproduction implements IReproduction {
     MapDirection direction;
     IWorldMap map;
     IBehaviorGenerator behavior;
@@ -50,7 +47,6 @@ public abstract class AbstractReproduction {
             weakerAnimal = parent1;
         }
 
-
         int[] strongerAnimalGenom = strongerAnimal.getGenoms();
         int[] weakerAnimalGenom = weakerAnimal.getGenoms();
         if (site == 0){
@@ -67,17 +63,16 @@ public abstract class AbstractReproduction {
                 System.arraycopy(strongerAnimalGenom, calculatePart(weakerAnimal, strongerAnimal), genom, calculatePart(weakerAnimal, strongerAnimal), config.genomsLength() - calculatePart(weakerAnimal, strongerAnimal));
         }
 
-
         mutate(genom, rand.nextInt((config.maxMutations() - config.minMutations()) + 1) + config.minMutations());
+
         return genom;
     }
 
-    //dokonanie mutacji, różne zależnie od wariantu
-    abstract int[] mutate(int[] genom, int mutationsNumber);
-
     //stworzenie zwierzęcia z gotowym genomem i energią
-    private Animal createAnimal(Animal parent1, Animal parent2){
+    public Animal createAnimal(Animal parent1, Animal parent2){
         Animal child = new Animal(direction, parent1.position(), map, createGenom(parent1, parent2), behavior, 2*config.energyToReproduction());
+        parent1.substractEnergy(config.energyToReproduction());
+        parent2.substractEnergy(config.energyToReproduction());
         return child;
     }
 }

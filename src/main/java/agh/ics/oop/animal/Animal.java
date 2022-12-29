@@ -1,6 +1,6 @@
 package agh.ics.oop.animal;
 
-import agh.ics.oop.MapDirection;
+import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
 import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IPositionChangeObserver;
@@ -65,6 +65,9 @@ public class Animal implements IMapElement {
         observerList.remove(observer);
     }
 
+    public void substractEnergy(int substractedEnergy) {
+        this.energy -= substractedEnergy;
+    }
 
     public void move(){
         activeGene = behavior.turn(activeGene, genoms.length);

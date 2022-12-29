@@ -1,7 +1,7 @@
 package agh.ics.oop.reproduction;
 
 
-import agh.ics.oop.MapDirection;
+import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
 import agh.ics.oop.interfaces.IWorldMap;
@@ -17,7 +17,7 @@ public class SlightCorrection extends AbstractReproduction {
     }
 
     @Override
-    int[] mutate(int[] genom, int mutationsNumber) {
+    public int[] mutate(int[] genom, int mutationsNumber) {
         List<Integer> genoms = new ArrayList<>();
         for (int i = 0; i < genom.length; i++){
             genoms.add(i);

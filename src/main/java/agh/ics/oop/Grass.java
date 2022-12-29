@@ -1,10 +1,10 @@
-package agh.ics.oop.grass;
+package agh.ics.oop;
 
-import agh.ics.oop.Vector2d;
+import agh.ics.oop.interfaces.IMapElement;
 
 import java.util.Objects;
 
-public record Grass(Vector2d position){
+public record Grass(Vector2d position) implements IMapElement {
 
     @Override
     public String toString() {

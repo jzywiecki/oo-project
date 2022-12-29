@@ -1,4 +1,5 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
+import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.interfaces.IGrassGenerator;
 import agh.ics.oop.interfaces.IMapElement;

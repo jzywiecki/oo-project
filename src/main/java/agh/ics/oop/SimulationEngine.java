@@ -1,10 +1,14 @@
 package agh.ics.oop;
 
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.behavior.BitOfMadness;
 import agh.ics.oop.interfaces.IWorldMap;
+import agh.ics.oop.map.*;
+import agh.ics.oop.variants.MapVariant;
 
 public class SimulationEngine {
     private IWorldMap map;
@@ -28,7 +32,6 @@ public class SimulationEngine {
 
    public void run(){
         //initialize
-        var visual = new MapVisualizer(map);
         generateAnimals(3);
        //phase 1 dead cleanup
        System.out.println(map);
@@ -59,7 +62,12 @@ public class SimulationEngine {
             if(map.isOccupied(new Vector2d(x, y))){
                 i--;
             }else {
-                Animal animal = new Animal( MapDirection.NORTH, new Vector2d(x,y), map, null, null, configuration.startingEnergy());
+                Random rng = new Random();
+                int[] genoms = new int[2];
+                for (int j = 0; j < 2; j++){
+                    genoms[j] = rng.nextInt(8);
+                }
+                Animal animal = new Animal( MapDirection.NORTH, new Vector2d(x,y), map, genoms, new BitOfMadness(), 20);
                 map.place(animal);
                 this.animals.add(animal);
             }

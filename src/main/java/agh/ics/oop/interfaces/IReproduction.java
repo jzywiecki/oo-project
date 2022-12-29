@@ -6,5 +6,6 @@ package agh.ics.oop.interfaces;
 
 
 
-public interface IMutationGenerator {
+public interface IReproduction {
+    int[] mutate(int[] genom, int mutationsNumber);
 }

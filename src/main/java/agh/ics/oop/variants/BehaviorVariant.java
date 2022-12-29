@@ -1,4 +1,4 @@
-package agh.ics.oop.behavior;
+package agh.ics.oop.variants;
 
 public enum BehaviorVariant {
     CRAZY,

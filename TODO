@@ -2,8 +2,6 @@ Pozmieniać atrybuty z protected na private, jeśli nie zostały użyte
 
 naprawić rysowanie żeby zobaczyć co działa -> usunąć ObjectAt in Abstract World map
 
-ogólnie to prawie nic nie działa ale poprawie to w piątek w nocy
-
 poprawić place
 
 po usunięciu zwierzęcia zostaje pusta lista w hashmapie - naprawić

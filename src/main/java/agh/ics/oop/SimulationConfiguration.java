@@ -1,7 +1,9 @@
 package agh.ics.oop;
 
-import agh.ics.oop.behavior.BehaviorVariant;
-import agh.ics.oop.reproduction.MutationVariant;
+import agh.ics.oop.variants.BehaviorVariant;
+import agh.ics.oop.variants.GrassVariant;
+import agh.ics.oop.variants.MapVariant;
+import agh.ics.oop.variants.MutationVariant;
 
 public record SimulationConfiguration(
 //    wysokość i szerokość mapy,

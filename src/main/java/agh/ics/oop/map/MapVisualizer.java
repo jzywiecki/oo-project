@@ -1,5 +1,6 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
 
+import agh.ics.oop.Vector2d;
 import agh.ics.oop.interfaces.IWorldMap;
 
 /**

@@ -1,4 +1,4 @@
-package agh.ics.oop.reproduction;
+package agh.ics.oop.variants;
 
 public enum MutationVariant {
     RANDOM,
