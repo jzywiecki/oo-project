@@ -67,13 +67,13 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
             mapElements.remove(oldPosition);
         }
 
+        mapElements.get(oldPosition).remove(animal);
         if(mapElements.containsKey(newPosition)){
             mapElements.get(newPosition).push(animal);
         }
         LinkedList<IMapElement> val = new LinkedList<>();
         val.add(animal);
         mapElements.put(newPosition,val);
-
 
 
     }

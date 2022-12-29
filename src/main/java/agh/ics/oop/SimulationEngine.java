@@ -16,9 +16,6 @@ public class SimulationEngine {
             case GLOBE_MAP -> this.map = new GlobeMap(b2, b1);
             case HELLISH_MAP -> this.map =new HellishMap(b2, b1);
         }
-
-
-
     }
 
 
@@ -26,15 +23,16 @@ public class SimulationEngine {
         //initialize
         var visual = new MapVisualizer(map);
         generateAnimals(3);
+
        //phase 1 dead cleanup
        System.out.println(map);
 
        //phase 2 movement
        for (int i = 0; i< 20; i++){
-
            animals.forEach((Animal::move));
            System.out.println(map);
        }
+
 
 
        // phase 3 eating
