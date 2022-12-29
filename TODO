@@ -10,6 +10,8 @@ po usunięciu zwierzęcia zostaje pusta lista w hashmapie - naprawić
 
 zrobić losowanie żeby nie było całkiem losowe
 
+przenieść z przycisku z app wszystko poza showOpenDialog do optionParser
+
 rzeczy tymczasowe:
 -generate animals w SimulationEngine
 -moveAnimal w AbstractWorldMap
