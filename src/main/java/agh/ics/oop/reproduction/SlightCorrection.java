@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class SlightCorrection extends AbstractReproduction {
-    public SlightCorrection(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
-        super(direction, map, behavior, config);
+    public SlightCorrection(IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
+        super(map, behavior, config);
     }
 
     @Override

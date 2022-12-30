@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class FullRandomness extends AbstractReproduction {
-    public FullRandomness(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
-        super(direction, map, behavior, config);
+    public FullRandomness(IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
+        super(map, behavior, config);
     }
 
     @Override

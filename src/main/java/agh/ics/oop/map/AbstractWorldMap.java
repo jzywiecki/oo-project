@@ -61,7 +61,6 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     @Override
     public Vector2d moveAnimal(Animal animal, MapDirection direction) {
-
         return animal.position().add(direction.toUnitVector());
     }
 

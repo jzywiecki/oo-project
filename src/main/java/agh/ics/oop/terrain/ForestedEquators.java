@@ -9,7 +9,7 @@ import static java.lang.Math.abs;
 public class ForestedEquators  implements IGrassGenerator {
     @Override
     public void place(Grass grass, Vector2d lowerBound, Vector2d upperBound) {
-        int equatorLattitude = (int) abs((0.2*(upperBound.y()-lowerBound.y()+1)));
+
 
 
 

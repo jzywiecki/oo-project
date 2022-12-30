@@ -2,6 +2,7 @@ package agh.ics.oop.reproduction;
 
 
 
+import agh.ics.oop.MoveDirection;
 import agh.ics.oop.interfaces.IReproduction;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
@@ -14,13 +15,11 @@ import java.util.Random;
 
 
 public abstract class AbstractReproduction implements IReproduction {
-    MapDirection direction;
     IWorldMap map;
     IBehaviorGenerator behavior;
     SimulationConfiguration config;
 
-    public AbstractReproduction(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
-        this.direction = direction;
+    public AbstractReproduction(IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
         this.behavior = behavior;
         this.map = map;
         this.config = config;
@@ -38,7 +37,13 @@ public abstract class AbstractReproduction implements IReproduction {
         int site = rand.nextInt(2); //0 - left, 1 - right
 
         AnimalComparator animalComparator = new AnimalComparator();
-        Animal strongerAnimal = animalComparator.animalCompare(parent1, parent2);
+        Animal strongerAnimal;
+        if (animalComparator.compare(parent1, parent2) < 0){
+            strongerAnimal = parent1;
+        }
+        else{
+            strongerAnimal = parent2;
+        }
         Animal weakerAnimal;
         if (strongerAnimal.equals(parent1)){
             weakerAnimal = parent2;
@@ -70,7 +75,11 @@ public abstract class AbstractReproduction implements IReproduction {
 
     //stworzenie zwierzęcia z gotowym genomem i energią
     public Animal createAnimal(Animal parent1, Animal parent2){
-        Animal child = new Animal(direction, parent1.position(), map, createGenom(parent1, parent2), behavior, 2*config.energyToReproduction());
+        if (parent1.getEnergy() < config.reproductionRequirement() || parent2.getEnergy() < config.reproductionRequirement()){
+            return null;
+        }
+        int[] newGenom = createGenom(parent1, parent2);
+        Animal child = new Animal(MapDirection.values()[newGenom[0]], parent1.position(), map, newGenom, behavior, config.startingEnergy());
         parent1.substractEnergy(config.energyToReproduction());
         parent2.substractEnergy(config.energyToReproduction());
         return child;

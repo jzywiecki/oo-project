@@ -8,9 +8,7 @@ import agh.ics.oop.variants.MutationVariant;
 import java.util.Properties;
 
 public class OptionsParser {
-<<<<<<< main
 
-=======
     public static SimulationConfiguration parse(Properties props){
         MapVariant mapVariant = switch(props.getProperty("mapVariant")) {
             case "GLOBE_MAP" -> MapVariant.GLOBE_MAP;
@@ -53,5 +51,5 @@ public class OptionsParser {
 
 
     }
->>>>>>> Loading and parsing configuration
+
 }

@@ -1,9 +1,17 @@
 package agh.ics.oop.gui;
 
-<<<<<<< main
-public class App {
 
-=======
+import agh.ics.oop.SimulationConfiguration;
+
+import java.util.Properties;
+import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.SimulationConfiguration;
 import javafx.application.Application;
@@ -14,7 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Properties;
+
 
 public class App extends Application {
     private SimulationConfiguration currentConfiguration;
@@ -51,5 +59,5 @@ public class App extends Application {
     private void ShowCurrentConfig(Properties prop){
 
     }
->>>>>>> Loading and parsing configuration
+
 }
