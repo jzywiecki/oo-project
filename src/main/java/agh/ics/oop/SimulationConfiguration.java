@@ -1,5 +1,14 @@
 package agh.ics.oop;
 
+<<<<<<< Updated upstream
+=======
+import agh.ics.oop.variants.BehaviorVariant;
+import agh.ics.oop.variants.GrassVariant;
+import agh.ics.oop.variants.MapVariant;
+import agh.ics.oop.variants.MutationVariant;
+import javafx.beans.Observable;
+
+>>>>>>> Stashed changes
 public record SimulationConfiguration(
 //    wysokość i szerokość mapy,
         Vector2d bounds,
@@ -27,7 +36,7 @@ public record SimulationConfiguration(
 //    wariant mutacji (wyjaśnione w sekcji poniżej),
         MutationVariant mutation,
 //    długość genomu zwierzaków,
-        int genomsLength,
+        int genomesLength,
 //    wariant zachowania zwierzaków (wyjaśnione w sekcji poniżej),
         BehaviorVariant behavior
 ) {
@@ -47,7 +56,7 @@ public record SimulationConfiguration(
                 ", minMutations=" + minMutations +
                 ", maxMutations=" + maxMutations +
                 ", mutationVariant=" + mutation +
-                ", genomsLength=" + genomsLength +
+                ", genomesLength=" + genomesLength +
                 ", behaviorVariant=" + behavior +
                 '}';
     }

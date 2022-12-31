@@ -1,19 +1,31 @@
+<<<<<<< Updated upstream:src/main/java/agh/ics/oop/AbstractWorldMap.java
 package agh.ics.oop;
+=======
+package agh.ics.oop.map;
+import agh.ics.oop.SimulationConfiguration;
+import agh.ics.oop.Vector2d;
+import agh.ics.oop.animal.Animal;
+import agh.ics.oop.interfaces.IGrassGenerator;
+import agh.ics.oop.interfaces.IMapElement;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
+import agh.ics.oop.interfaces.IWorldMap;
+
+>>>>>>> Stashed changes:src/main/java/agh/ics/oop/map/AbstractWorldMap.java
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
 
-    protected Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
+    private final Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
     protected final Vector2d upperBound;
-    protected final Vector2d lowerBound;
-    private IGrassGenerator grassGenerator;
+    protected final Vector2d lowerBound = new Vector2d(0, 0);
 
+    protected final SimulationConfiguration configuration;
 
-    public AbstractWorldMap(Vector2d upperBound, Vector2d lowerBound) {
-        this.upperBound = upperBound;
-        this.lowerBound = lowerBound;
+    public AbstractWorldMap(SimulationConfiguration configuration) {
+        this.upperBound = configuration.bounds();
+        this.configuration = configuration;
     }
 
 
@@ -28,7 +40,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
         if(!position.follows(lowerBound) && !position.precedes(upperBound)){
             throw new IllegalArgumentException("illegal animal placement on position: " + position);
         }
-
+        animal.addObserver(this);
         if(mapElements.containsKey(animal.position())){
             mapElements.get(position).add(animal);
             return;
@@ -36,9 +48,6 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
         LinkedList<IMapElement> val = new LinkedList<>();
         val.add(animal);
         mapElements.put(position,val);
-        animal.addObserver(this);
-        System.out.println("lista: " + val);
-        System.out.println("wszystko: " + mapElements);
     }
 
     //required for mapVisualizer, returns Animal if position is not empty
@@ -50,12 +59,17 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
         return null;
     }
 
+
     @Override
-    public Vector2d moveAnimal(Animal animal, MapDirection direction) {
+    public void deleteAnimal(Animal animal) {
+        animal.removeObserver(this);
+        var objectsOnPosition = mapElements.get(animal.position());
+        objectsOnPosition.remove(animal);
 
-        return animal.position().add(direction.toUnitVector());
+        if(objectsOnPosition.isEmpty()){
+            mapElements.remove(animal.position());
+        }
     }
-
 
     //move animal in mapElements
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal animal){
@@ -74,8 +88,11 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
         LinkedList<IMapElement> val = new LinkedList<>();
         val.add(animal);
         mapElements.put(newPosition,val);
+<<<<<<< Updated upstream:src/main/java/agh/ics/oop/AbstractWorldMap.java
 
 
+=======
+>>>>>>> Stashed changes:src/main/java/agh/ics/oop/map/AbstractWorldMap.java
     }
 
     @Override

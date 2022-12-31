@@ -1,5 +1,6 @@
 Pozmieniać atrybuty z protected na private, jeśli nie zostały użyte
 
+<<<<<<< Updated upstream
 naprawić rysowanie żeby zobaczyć co działa -> usunąć ObjectAt in Abstract World map
 
 ogólnie to prawie nic nie działa ale poprawie to w piątek w nocy
@@ -9,11 +10,9 @@ poprawić place
 po usunięciu zwierzęcia zostaje pusta lista w hashmapie - naprawić
 
 zrobić losowanie żeby nie było całkiem losowe
+=======
+usunąć ObjectAt in Abstract World map jak bedzie gui
+>>>>>>> Stashed changes
 
 przenieść z przycisku z app wszystko poza showOpenDialog do optionParser
 
-rzeczy tymczasowe:
--generate animals w SimulationEngine
--moveAnimal w AbstractWorldMap
--stału obrót przy ruchu
--stałe granice mapy

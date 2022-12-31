@@ -5,6 +5,7 @@ import agh.ics.oop.SimulationConfiguration;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,21 +24,12 @@ public class App extends Application {
 
         load.setOnAction(e -> {
             File configFile = fileChooser.showOpenDialog(primaryStage);
-            try {
-                InputStream input = new FileInputStream(configFile);
-                Properties prop = new Properties();
-                prop.load(input);
-                currentConfiguration = OptionsParser.parse(prop);
-                System.out.println(currentConfiguration);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            currentConfiguration = OptionsParser.parse(configFile);
         });
 
 
 
         HBox main = new HBox(load);
-
         Scene scene = new Scene(main, 500,500);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -47,4 +39,8 @@ public class App extends Application {
     private void ShowCurrentConfig(Properties prop){
 
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }

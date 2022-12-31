@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface IWorldMap {
 
-   // boolean canMoveTo(Vector2d position);
 
     void place(Animal animal);
 
@@ -36,5 +35,9 @@ public interface IWorldMap {
      *      *     Direction in which animal will move
      */
     Vector2d moveAnimal(Animal animal, MapDirection direction);
+
+
+    void deleteAnimal(Animal animal);
+
 }
 
