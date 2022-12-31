@@ -1,10 +1,4 @@
 package agh.ics.oop;
-<<<<<<< Updated upstream
-import java.util.Properties;
-
-public class OptionsParser {
-    public static SimulationConfiguration parse(Properties props){
-=======
 
 import agh.ics.oop.variants.BehaviorVariant;
 import agh.ics.oop.variants.GrassVariant;
@@ -17,9 +11,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
 public class OptionsParser {
 
-    public static SimulationConfiguration parse(File configFile){
+    public static SimulationConfiguration parseFile(File configFile) {
 
         Properties props = new Properties();
         try {
@@ -28,8 +23,11 @@ public class OptionsParser {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        return parse(props);
+    }
 
->>>>>>> Stashed changes
+    public static SimulationConfiguration parse(Properties props) {
+
         MapVariant mapVariant = switch(props.getProperty("mapVariant")) {
             case "GLOBE_MAP" -> MapVariant.GLOBE_MAP;
             case "HELLISH_MAP" -> MapVariant.HELLISH_MAP;

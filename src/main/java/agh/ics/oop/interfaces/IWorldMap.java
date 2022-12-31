@@ -1,4 +1,8 @@
-package agh.ics.oop;
+package agh.ics.oop.interfaces;
+
+import agh.ics.oop.animal.Animal;
+import agh.ics.oop.map.MapDirection;
+import agh.ics.oop.Vector2d;
 
 import java.util.List;
 

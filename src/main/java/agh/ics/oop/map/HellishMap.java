@@ -1,8 +1,6 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
 
-<<<<<<< Updated upstream:src/main/java/agh/ics/oop/HellishMap.java
-public class HellishMap extends AbstractWorldMap{
-=======
+
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
@@ -11,7 +9,6 @@ import agh.ics.oop.map.AbstractWorldMap;
 import java.util.Random;
 
 public class HellishMap extends AbstractWorldMap {
->>>>>>> Stashed changes:src/main/java/agh/ics/oop/map/HellishMap.java
 
     public HellishMap(SimulationConfiguration configuration) {
         super(configuration);

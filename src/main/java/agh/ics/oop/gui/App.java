@@ -24,7 +24,7 @@ public class App extends Application {
 
         load.setOnAction(e -> {
             File configFile = fileChooser.showOpenDialog(primaryStage);
-            currentConfiguration = OptionsParser.parse(configFile);
+            currentConfiguration = OptionsParser.parseFile(configFile);
         });
 
 
@@ -39,8 +39,4 @@ public class App extends Application {
     private void ShowCurrentConfig(Properties prop){
 
     }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 }
