@@ -1,14 +1,28 @@
 package agh.ics.oop;
 
 import agh.ics.oop.gui.App;
-import agh.ics.oop.variants.MapVariant;
 import javafx.application.Application;
-
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class World {
     public static void main(String[] args) {
-        var engine = new SimulationEngine(MapVariant.GLOBE_MAP);
+
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = new FileInputStream("src/main/resources/config.txt");
+            prop.load(input);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        SimulationConfiguration currentConfiguration = OptionsParser.parse(prop);
+        System.out.println(currentConfiguration);
+
+        var engine = new SimulationEngine(currentConfiguration);
+
 
         try{
             engine.run();

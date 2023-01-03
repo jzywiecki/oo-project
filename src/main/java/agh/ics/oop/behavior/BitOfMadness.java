@@ -10,13 +10,14 @@ import java.util.Random;
 public class BitOfMadness implements IBehaviorGenerator {
 
     @Override
-    public int turn(int activeGene, int genomsLength) {
+    public int turn(int activeGene, int genomesLength) {
+
         Random random = new Random();
         double r = random.nextDouble();
         boolean ifRandom = !(r <= 0.8);
 
         if (!ifRandom){
-            if (activeGene == genomsLength - 1){
+            if (activeGene == genomesLength - 1){
                 return 0;
             }
             else{
@@ -24,7 +25,7 @@ public class BitOfMadness implements IBehaviorGenerator {
             }
         }
         else{
-            return random.nextInt(genomsLength-1);
+            return random.nextInt(genomesLength-1);
         }
     }
 

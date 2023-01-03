@@ -7,7 +7,7 @@ package agh.ics.oop.interfaces;
 
 public interface IEngine {
     /**
-    * Move the animal on the map according to the provided move directions.
+    * Start simulation
     */
     void run();
 }

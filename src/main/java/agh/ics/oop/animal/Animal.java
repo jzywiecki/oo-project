@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class Animal implements IMapElement {
+
+public class Animal implements IMapElement{
     private final IWorldMap map;
     private final ArrayList<IPositionChangeObserver> observerList = new ArrayList<>();
     private final IBehaviorGenerator behavior;
-    private final int[] genoms;
+
+    private final int[] genomes;
     protected int activeGene = 0;
 
     private MapDirection direction;
@@ -23,18 +25,22 @@ public class Animal implements IMapElement {
     private int age = 0;
     private int numberOfChildren = 0;
 
-    public Animal(MapDirection direction, Vector2d position, IWorldMap map, int[] genoms, IBehaviorGenerator behavior, int energy) {
+    public Animal(MapDirection direction, Vector2d position, IWorldMap map, int[] genomes, IBehaviorGenerator behavior, int energy) {
+
         this.direction = direction;
         this.position = position;
         this.map = map;
-        this.genoms = genoms;
+        this.genomes = genomes;
         this.behavior = behavior;
         this.energy = energy;
     }
 
+    public MapDirection getDirection() {
+        return direction;
+    }
 
-    public int[] getGenoms(){
-        return genoms;
+    public int[] getGenomes(){
+        return genomes;
     }
 
     public int getEnergy(){
@@ -49,7 +55,9 @@ public class Animal implements IMapElement {
         return numberOfChildren;
     }
 
-
+    public void turn(int x){
+        this.direction = this.direction.add(x);
+    }
 
     public boolean isAt(Vector2d target){
         return Objects.equals(this.position, target);
@@ -65,13 +73,13 @@ public class Animal implements IMapElement {
         observerList.remove(observer);
     }
 
-    public void substractEnergy(int substractedEnergy) {
-        this.energy -= substractedEnergy;
+    public void subtractEnergy(int subtractedEnergy) {
+        this.energy -= subtractedEnergy;
     }
 
     public void move(){
-        activeGene = behavior.turn(activeGene, genoms.length);
-        direction = MapDirection.values()[activeGene];
+        activeGene = behavior.turn(activeGene, genomes.length);
+        this.turn(genomes[activeGene]);
         Vector2d newPosition = map.moveAnimal(this, direction);
         for (IPositionChangeObserver observer : observerList) {
             observer.positionChanged(position, newPosition, this);

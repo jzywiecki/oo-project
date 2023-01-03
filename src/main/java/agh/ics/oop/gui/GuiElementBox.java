@@ -17,16 +17,28 @@ public class GuiElementBox {
     public GuiElementBox(Object object, Vector2d position) throws FileNotFoundException {
         Label label;
         if (object instanceof Animal animal){
-//            switch (animal.getOrientation()){
-//                case NORTH -> image = new Image(new FileInputStream("src/main/resources/up.png"));
-//                case EAST -> image = new Image(new FileInputStream("src/main/resources/right.png"));
-//                case SOUTH -> image = new Image(new FileInputStream("src/main/resources/down.png"));
-//                case WEST -> image = new Image(new FileInputStream("src/main/resources/left.png"));
-//            }
+            try {
+                switch (animal.getDirection()) {
+                    case NORTH -> image = new Image(new FileInputStream("src/main/resources/up.png"));
+                    case NORTH_EAST -> new Image(new FileInputStream("src/main/resources/up_right.png"));
+                    case EAST -> image = new Image(new FileInputStream("src/main/resources/right.png"));
+                    case SOUTH_EAST -> new Image(new FileInputStream("src/main/resources/down_right.png"));
+                    case SOUTH -> image = new Image(new FileInputStream("src/main/resources/down.png"));
+                    case SOUTH_WEST -> new Image(new FileInputStream("src/main/resources/down_left.png"));
+                    case WEST -> image = new Image(new FileInputStream("src/main/resources/left.png"));
+                    case NORTH_WEST -> new Image(new FileInputStream("src/main/resources/up_left.png"));
+                }
+            } catch (FileNotFoundException ex){
+                System.out.println(ex.getMessage());
+            }
             label = new Label("z" + position.toString());
         }
         else{
-            image = new Image(new FileInputStream("src/main/resources/grass.png"));
+            try {
+                image = new Image(new FileInputStream("src/main/resources/grass.png"));
+            }catch (FileNotFoundException ex){
+                System.out.println(ex.getMessage());
+            }
             label = new Label("Trawa");
         }
 

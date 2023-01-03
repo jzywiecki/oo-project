@@ -32,7 +32,7 @@ public record SimulationConfiguration(
 //    wariant mutacji (wyjaśnione w sekcji poniżej),
         MutationVariant mutation,
 //    długość genomu zwierzaków,
-        int genomsLength,
+        int genomesLength,
 //    wariant zachowania zwierzaków (wyjaśnione w sekcji poniżej),
         BehaviorVariant behavior
 ) {
@@ -54,7 +54,7 @@ public record SimulationConfiguration(
                 ", minMutations=" + minMutations +
                 ", maxMutations=" + maxMutations +
                 ", mutationVariant=" + mutation +
-                ", genomsLength=" + genomsLength +
+                ", genomesLength=" + genomesLength +
                 ", behaviorVariant=" + behavior +
                 '}';
     }
