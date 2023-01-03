@@ -1,4 +1,5 @@
 package agh.ics.oop.map;
+import agh.ics.oop.Grass;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.interfaces.IGrassGenerator;
@@ -6,15 +7,13 @@ import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
+import java.util.*;
 
 
 abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     protected Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
+
     protected final Vector2d upperBound;
     protected final Vector2d lowerBound;
     private IGrassGenerator grassGenerator;
@@ -35,7 +34,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     public void place(Animal animal) {
         Vector2d position = animal.position();
         if(!position.follows(lowerBound) && !position.precedes(upperBound)){
-            throw new IllegalArgumentException("illegal animal placement on position: " + position);
+            throw new IllegalArgumentException("Illegal animal placement on position: " + position);
         }
 
         if(mapElements.containsKey(animal.position())){
@@ -64,6 +63,17 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         return animal.position().add(direction.toUnitVector());
     }
 
+    //get grass at specific position
+    public Grass getGrassAtPosition(Vector2d position){
+        LinkedList<IMapElement> elementsAtPosition = mapElements.get(position);
+        Object[] elements = elementsAtPosition.toArray();
+        for (Object element: elements){
+            if(element instanceof Grass){
+                return (Grass) element;
+            }
+        }
+        return null;
+    }
 
     //move animal in mapElements
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal animal){
@@ -90,5 +100,13 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
         return map.draw(lowerBound, upperBound);
+    }
+
+    public Vector2d getLowerBound() {
+        return lowerBound;
+    }
+
+    public Vector2d getUpperBound() {
+        return upperBound;
     }
 }

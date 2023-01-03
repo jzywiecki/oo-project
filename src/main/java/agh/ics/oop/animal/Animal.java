@@ -90,4 +90,8 @@ public class Animal implements IMapElement {
         return "A";
     }
 
+
+    public MapDirection getDirection() {
+        return direction;
+    }
 }

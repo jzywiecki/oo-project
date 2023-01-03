@@ -1,5 +1,6 @@
 package agh.ics.oop.interfaces;
 
+import agh.ics.oop.Grass;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.Vector2d;
@@ -40,5 +41,11 @@ public interface IWorldMap {
      *      *     Direction in which animal will move
      */
     Vector2d moveAnimal(Animal animal, MapDirection direction);
+
+    Vector2d getLowerBound();
+
+    Vector2d getUpperBound();
+
+    Grass getGrassAtPosition(Vector2d position);
 }
 

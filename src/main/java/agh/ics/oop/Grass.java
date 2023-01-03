@@ -4,13 +4,12 @@ import agh.ics.oop.interfaces.IMapElement;
 
 import java.util.Objects;
 
-public record Grass(Vector2d position) implements IMapElement {
+public record Grass(Vector2d position, int energy) implements IMapElement {
 
     @Override
     public String toString() {
         return "*";
     }
-
 
     @Override
     public boolean equals(Object o) {
