@@ -1,5 +1,12 @@
 package agh.ics.oop.gui;
 
-public class GuiStats {
+import javafx.application.Application;
+import javafx.stage.Stage;
 
+public class GuiStats extends Application{
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+    }
 }

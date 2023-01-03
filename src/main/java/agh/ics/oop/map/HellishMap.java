@@ -4,7 +4,6 @@ package agh.ics.oop.map;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
-import agh.ics.oop.map.AbstractWorldMap;
 
 import java.util.Random;
 

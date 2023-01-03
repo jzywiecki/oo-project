@@ -25,7 +25,6 @@ public class Animal implements IMapElement{
     private int age = 0;
     private int numberOfChildren = 0;
 
-
     public Animal(MapDirection direction, Vector2d position, IWorldMap map, int[] genomes, IBehaviorGenerator behavior, int energy) {
 
         this.direction = direction;
@@ -36,7 +35,9 @@ public class Animal implements IMapElement{
         this.energy = energy;
     }
 
-
+    public MapDirection getDirection() {
+        return direction;
+    }
 
     public int[] getGenomes(){
         return genomes;

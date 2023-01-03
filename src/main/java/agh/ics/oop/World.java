@@ -3,7 +3,6 @@ package agh.ics.oop;
 import agh.ics.oop.gui.App;
 import javafx.application.Application;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -23,6 +22,7 @@ public class World {
         System.out.println(currentConfiguration);
 
         var engine = new SimulationEngine(currentConfiguration);
+
 
         try{
             engine.run();

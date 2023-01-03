@@ -1,7 +1,5 @@
 package agh.ics.oop.reproduction;
 
-
-import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
 import agh.ics.oop.interfaces.IWorldMap;
@@ -12,8 +10,10 @@ import java.util.List;
 import java.util.Random;
 
 public class SlightCorrection extends AbstractReproduction {
-    public SlightCorrection(MapDirection direction, IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
-        super(direction, map, behavior, config);
+    public static Random rng = new Random();
+
+    public SlightCorrection(IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
+        super(map, behavior, config);
     }
 
     @Override
@@ -35,9 +35,6 @@ public class SlightCorrection extends AbstractReproduction {
         }
         return genome;
     }
-
-    public static Random rng = new Random();
-
 
     public static void shuffle(List<?> collection) {
         Collections.shuffle(collection, rng);

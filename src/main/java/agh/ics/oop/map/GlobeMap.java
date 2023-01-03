@@ -27,5 +27,6 @@ public class GlobeMap extends AbstractWorldMap {
         return newPosition;
     }
 
+
 }
 

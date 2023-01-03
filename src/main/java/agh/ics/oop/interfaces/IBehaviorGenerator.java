@@ -6,7 +6,6 @@ package agh.ics.oop.interfaces;
 
 public interface IBehaviorGenerator {
 
-
     int turn(int activeGene, int genomesLength);
 
 }

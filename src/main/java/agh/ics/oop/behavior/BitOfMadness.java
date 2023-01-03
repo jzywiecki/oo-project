@@ -17,7 +17,6 @@ public class BitOfMadness implements IBehaviorGenerator {
         boolean ifRandom = !(r <= 0.8);
 
         if (!ifRandom){
-
             if (activeGene == genomesLength - 1){
                 return 0;
             }

@@ -3,8 +3,6 @@ package agh.ics.oop.map;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.interfaces.IWorldMap;
 
-import agh.ics.oop.interfaces.IWorldMap;
-
 /**
  * The map visualizer converts the {@link IWorldMap} map into a string
  * representation.

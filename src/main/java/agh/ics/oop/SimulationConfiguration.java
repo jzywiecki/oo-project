@@ -5,7 +5,6 @@ import agh.ics.oop.variants.GrassVariant;
 import agh.ics.oop.variants.MapVariant;
 import agh.ics.oop.variants.MutationVariant;
 
-
 public record SimulationConfiguration(
 //    wysokość i szerokość mapy,
         Vector2d bounds,

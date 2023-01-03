@@ -2,11 +2,11 @@ package agh.ics.oop;
 
 import java.util.LinkedList;
 import java.util.Random;
-
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.behavior.BitOfMadness;
 import agh.ics.oop.behavior.FullPredestination;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
+import agh.ics.oop.animal.AnimalComparator;
 import agh.ics.oop.interfaces.IReproduction;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.*;
@@ -21,10 +21,6 @@ public class SimulationEngine {
     private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
 
-
-    //remove later
-    
-
     public SimulationEngine(SimulationConfiguration configuration){
         this.configuration = configuration;
         switch (configuration.map()){
@@ -36,8 +32,8 @@ public class SimulationEngine {
             case CRAZY -> this.behavior =new BitOfMadness();
         }
         switch (configuration.mutation()){
-            case SLIGHT_CORRECTION -> this.reproduction = new SlightCorrection(MapDirection.NORTH, this.map, this.behavior, this.configuration);
-            case RANDOM -> this.reproduction =new FullRandomness(MapDirection.NORTH, this.map, this.behavior, this.configuration);
+            case SLIGHT_CORRECTION -> this.reproduction = new SlightCorrection(this.map, this.behavior, this.configuration);
+            case RANDOM -> this.reproduction =new FullRandomness(this.map, this.behavior, this.configuration);
         }
     }
 
@@ -45,30 +41,44 @@ public class SimulationEngine {
    public void run(){
         //initialize
         generateAnimals(configuration.numberOfAnimals());
-       //phase 1 dead cleanup
 
-       for(Animal animal : animals){
-           if( animal.getEnergy() <= 0){
-               map.deleteAnimal(animal);
-               animals.remove(animal);
+
+        //simulation
+       for (int i = 0; i< 20; i++) {
+           //phase 1 dead cleanup
+
+           for (Animal animal : animals) {
+               if (animal.getEnergy() <= 0) {
+                   map.deleteAnimal(animal);
+                   animals.remove(animal);
+               }
            }
-       }
 
-       //phase 2 movement
-       for (int i = 0; i< 20; i++){
-           animals.forEach((Animal::move));
+           //phase 2 movement
+
+           animals.forEach(Animal::move);
            System.out.println(map);
+
+           // phase 3 eating
+
        }
+           // phase 4 breeding
+           LinkedList<Vector2d> positions = new LinkedList<>();
+           animals.forEach(animal -> {
+               if (!positions.contains(animal.position())) {
+                   positions.add(animal.position());
+               }
+           });
+           positions.forEach(position -> {
+               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position)).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
+               if (animalsToReproduction.length == 2) {
+                   Animal newAnimal = reproduction.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
+                   map.place(newAnimal);
+                   this.animals.add(newAnimal);
+               }
+           });
 
-
-
-       // phase 3 eating
-
-
-       // phase 4 breeding
-
-
-       // phase 5 grass growth
+           // phase 5 grass growth
 
     }
 
@@ -92,4 +102,5 @@ public class SimulationEngine {
         }
         return genomes;
     }
+
 }

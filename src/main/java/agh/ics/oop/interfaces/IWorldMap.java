@@ -1,10 +1,9 @@
 package agh.ics.oop.interfaces;
 
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.grass.Grass;
 import agh.ics.oop.map.MapDirection;
-
 import agh.ics.oop.Vector2d;
-
 import java.util.List;
 
 public interface IWorldMap {
@@ -41,8 +40,12 @@ public interface IWorldMap {
      */
     Vector2d moveAnimal(Animal animal, MapDirection direction);
 
-
     void deleteAnimal(Animal animal);
 
+    Vector2d getLowerBound();
+
+    Vector2d getUpperBound();
+
+    Grass getGrassAtPosition(Vector2d position);
 }
 

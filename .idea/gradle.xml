@@ -9,6 +9,12 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../../../gradle-7.5.1-bin/gradle-7.5.1" />
+<!--=======-->
+<!--        <option name="delegatedBuild" value="false" />-->
+<!--        <option name="testRunner" value="PLATFORM" />-->
+<!--        <option name="distributionType" value="DEFAULT_WRAPPED" />-->
+<!--        <option name="externalProjectPath" value="$PROJECT_DIR$" />-->
+<!--&gt;>>>>>> Kuba-->
         <option name="gradleJvm" value="corretto-17" />
         <option name="modules">
           <set>
