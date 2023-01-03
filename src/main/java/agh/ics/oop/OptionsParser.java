@@ -1,10 +1,10 @@
 package agh.ics.oop;
 
+
 import agh.ics.oop.variants.BehaviorVariant;
 import agh.ics.oop.variants.GrassVariant;
 import agh.ics.oop.variants.MapVariant;
 import agh.ics.oop.variants.MutationVariant;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

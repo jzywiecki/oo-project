@@ -19,7 +19,6 @@ public class SimulationEngine {
     private IBehaviorGenerator behavior;
     private IReproduction reproduction;
     private final LinkedList<Animal> animals = new LinkedList<>();
-
     private final SimulationConfiguration configuration;
 
 

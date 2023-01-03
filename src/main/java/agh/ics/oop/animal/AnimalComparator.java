@@ -1,8 +1,6 @@
 package agh.ics.oop.animal;
 
 
-import agh.ics.oop.animal.Animal;
-
 import java.util.Random;
 
 public class AnimalComparator {
@@ -40,3 +38,4 @@ public class AnimalComparator {
     }
 
 }
+

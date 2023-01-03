@@ -1,7 +1,5 @@
 package agh.ics.oop.reproduction;
 
-
-
 import agh.ics.oop.interfaces.IReproduction;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
@@ -9,11 +7,12 @@ import agh.ics.oop.animal.Animal;
 import agh.ics.oop.animal.AnimalComparator;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
 import agh.ics.oop.interfaces.IWorldMap;
-
 import java.util.Random;
 
 
 public abstract class AbstractReproduction implements IReproduction {
+
+
     MapDirection direction;
     IWorldMap map;
     IBehaviorGenerator behavior;
@@ -34,6 +33,7 @@ public abstract class AbstractReproduction implements IReproduction {
     //tworzenie genomu
     private int[] createGenome(Animal parent1, Animal parent2) {
         int[] genome = new int[config.genomesLength()];
+
         Random rand = new Random();
         int site = rand.nextInt(2); //0 - left, 1 - right
 

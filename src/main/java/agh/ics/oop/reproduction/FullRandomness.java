@@ -1,6 +1,7 @@
 package agh.ics.oop.reproduction;
 
 
+
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
@@ -28,6 +29,7 @@ public class FullRandomness extends AbstractReproduction {
             genome[genomes.get(i)] = rng.nextInt(8);
         }
         return genome;
+
     }
 
     public static Random rng = new Random();
