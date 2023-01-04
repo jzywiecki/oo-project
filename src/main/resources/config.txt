@@ -1,11 +1,11 @@
-height=5
-width=5
+height=20
+width=20
 mapVariant=GLOBE_MAP
 startingGrass=5
 grassEnergy=30
 grassGrowth=4
 grassVariant=DEAD
-numberOfAnimals=4
+numberOfAnimals=10
 startingEnergy=50
 reproductionRequirement=40
 energyToReproduction=20

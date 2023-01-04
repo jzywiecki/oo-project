@@ -1,7 +1,7 @@
 package agh.ics.oop.terrain;
 
 
-import agh.ics.oop.Grass;
+
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.interfaces.IWorldMap;

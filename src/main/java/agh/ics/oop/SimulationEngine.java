@@ -12,9 +12,10 @@ import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.*;
 import agh.ics.oop.reproduction.FullRandomness;
 import agh.ics.oop.reproduction.SlightCorrection;
+import agh.ics.oop.terrain.ForestedEquators;
 
 
-public class SimulationEngine {
+public class SimulationEngine implements Runnable {
     private IWorldMap map;
     private IBehaviorGenerator behavior;
     private IReproduction reproduction;
@@ -35,16 +36,17 @@ public class SimulationEngine {
             case SLIGHT_CORRECTION -> this.reproduction = new SlightCorrection(this.map, this.behavior, this.configuration);
             case RANDOM -> this.reproduction =new FullRandomness(this.map, this.behavior, this.configuration);
         }
+        generateAnimals(configuration.numberOfAnimals());
     }
 
 
-   public void run(){
-        //initialize
-        generateAnimals(configuration.numberOfAnimals());
+   public void run() {
+       //initialize
+       generateAnimals(configuration.numberOfAnimals());
 
 
-        //simulation
-       for (int i = 0; i< 20; i++) {
+       //simulation
+       for (int i = 0; i < 20; i++) {
            //phase 1 dead cleanup
 
            for (Animal animal : animals) {
@@ -55,31 +57,37 @@ public class SimulationEngine {
            }
 
            //phase 2 movement
-
            animals.forEach(Animal::move);
            System.out.println(map);
 
            // phase 3 eating
 
-       }
+
            // phase 4 breeding
            LinkedList<Vector2d> positions = new LinkedList<>();
+           FullRandomness makeAnimal = new FullRandomness(map, new BitOfMadness(), this.configuration);
            animals.forEach(animal -> {
                if (!positions.contains(animal.position())) {
                    positions.add(animal.position());
                }
            });
            positions.forEach(position -> {
-               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position)).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
+               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position) && animal.getEnergy() >= configuration.energyToReproduction()).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
                if (animalsToReproduction.length == 2) {
-                   Animal newAnimal = reproduction.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
-                   map.place(newAnimal);
-                   this.animals.add(newAnimal);
+                   Animal newAnimal = makeAnimal.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
+                   if (newAnimal != null){
+                       map.place(newAnimal);
+                       this.animals.add(newAnimal);
+
+                   }
                }
            });
 
            // phase 5 grass growth
+           ForestedEquators placeGrass = new ForestedEquators(map, configuration);
+           placeGrass.placeGrasses();
 
+       }
     }
 
     private void generateAnimals(int n){
@@ -103,4 +111,7 @@ public class SimulationEngine {
         return genomes;
     }
 
+    public IWorldMap getMap() {
+        return map;
+    }
 }

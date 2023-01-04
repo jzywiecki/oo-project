@@ -12,14 +12,11 @@ import java.util.LinkedList;
 import java.util.Map;
 
 
-
-
 abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     private final Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
     protected final Vector2d upperBound;
     protected final Vector2d lowerBound = new Vector2d(0, 0);
-
     protected final SimulationConfiguration configuration;
 
     public AbstractWorldMap(SimulationConfiguration configuration) {
@@ -27,7 +24,6 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         this.configuration = configuration;
 
     }
-
 
     @Override
     public LinkedList<IMapElement> objectsAt(Vector2d position) {
@@ -75,10 +71,12 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     //get grass at specific position
     public Grass getGrassAtPosition(Vector2d position){
         LinkedList<IMapElement> elementsAtPosition = mapElements.get(position);
-        Object[] elements = elementsAtPosition.toArray();
-        for (Object element: elements){
-            if(element instanceof Grass){
-                return (Grass) element;
+        if (elementsAtPosition != null) {
+            Object[] elements = elementsAtPosition.toArray();
+            for (Object element : elements) {
+                if (element instanceof Grass) {
+                    return (Grass) element;
+                }
             }
         }
         return null;

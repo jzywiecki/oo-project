@@ -1,13 +1,13 @@
 package agh.ics.oop.terrain;
 
-import agh.ics.oop.Grass;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
+import agh.ics.oop.grass.Grass;
 import agh.ics.oop.interfaces.IGrassGenerator;
 import agh.ics.oop.interfaces.IWorldMap;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public abstract class AbstractTerrain implements IGrassGenerator {
     protected IWorldMap map;
@@ -36,7 +36,6 @@ public abstract class AbstractTerrain implements IGrassGenerator {
     public void removeGrass(Grass grass) {
         this.grasses.remove(grass);
     }
-
 
     protected abstract void placeOnPreferedPosition(int quantity);
 
