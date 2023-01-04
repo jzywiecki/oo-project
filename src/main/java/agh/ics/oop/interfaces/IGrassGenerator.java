@@ -19,7 +19,7 @@ public interface IGrassGenerator {
 
     void removeGrass(Grass grass);
     void removeGrass(Vector2d position);
-
+    public boolean isGrassAt(Vector2d position);
     Grass grassAt(Vector2d position);
 
 }

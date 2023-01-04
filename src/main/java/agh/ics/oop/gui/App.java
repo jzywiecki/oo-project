@@ -66,17 +66,10 @@ public class App extends Application {
     private void loadConfiguration(Stage primaryStage) throws RuntimeException {
         load.setOnAction(e -> {
             File configFile = fileChooser.showOpenDialog(primaryStage);
-            try {
-                InputStream input = new FileInputStream(configFile);
-                Properties prop = new Properties();
-                prop.load(input);
-                currentConfiguration = OptionsParser.parse(prop);
-                System.out.println(currentConfiguration);
-                showCurrentConfig();
-                startSimulation();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            currentConfiguration = OptionsParser.parseFile(configFile);
+            System.out.println(currentConfiguration);
+            showCurrentConfig();
+            startSimulation();
         });
     }
 

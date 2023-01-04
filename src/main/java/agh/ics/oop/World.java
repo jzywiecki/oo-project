@@ -20,22 +20,22 @@ public class World {
         }
         SimulationConfiguration currentConfiguration = OptionsParser.parse(prop);
         System.out.println(currentConfiguration);
-
-        var engine = new SimulationEngine(currentConfiguration);
-
-
-        try{
-            engine.run();
-        }catch (IllegalArgumentException err){
-            System.out.println(err);
-            System.exit(-2);
-        }
 //
-//        try {
-//            Application.launch(App.class, args);
-//        } catch (IllegalArgumentException err) {
+//        var engine = new SimulationEngine(currentConfiguration);
+//
+//
+//        try{
+//            engine.run();
+//        }catch (IllegalArgumentException err){
+//            System.out.println(err);
 //            System.exit(-2);
 //        }
+
+        try {
+            Application.launch(App.class, args);
+        } catch (IllegalArgumentException err) {
+            System.exit(-2);
+        }
 
     }
 }

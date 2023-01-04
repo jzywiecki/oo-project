@@ -49,5 +49,7 @@ public interface IWorldMap {
      */
     void eatGrass();
 
+
+    Vector2d getUpperBound();
 }
 

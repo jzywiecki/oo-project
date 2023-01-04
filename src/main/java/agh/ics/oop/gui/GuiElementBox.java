@@ -19,16 +19,16 @@ public class GuiElementBox {
         Label label;
         if (object instanceof Animal animal){
             try {
-                switch (animal.getDirection()) {
-                    case NORTH -> image = new Image(new FileInputStream("src/main/resources/up.png"));
+                image = switch (animal.getDirection()) {
+                    case NORTH -> new Image(new FileInputStream("src/main/resources/up.png"));
                     case NORTH_EAST -> new Image(new FileInputStream("src/main/resources/up_right.png"));
-                    case EAST -> image = new Image(new FileInputStream("src/main/resources/right.png"));
+                    case EAST -> new Image(new FileInputStream("src/main/resources/right.png"));
                     case SOUTH_EAST -> new Image(new FileInputStream("src/main/resources/down_right.png"));
-                    case SOUTH -> image = new Image(new FileInputStream("src/main/resources/down.png"));
+                    case SOUTH -> new Image(new FileInputStream("src/main/resources/down.png"));
                     case SOUTH_WEST -> new Image(new FileInputStream("src/main/resources/down_left.png"));
-                    case WEST -> image = new Image(new FileInputStream("src/main/resources/left.png"));
+                    case WEST -> new Image(new FileInputStream("src/main/resources/left.png"));
                     case NORTH_WEST -> new Image(new FileInputStream("src/main/resources/up_left.png"));
-                }
+                };
             } catch (FileNotFoundException ex){
                 System.out.println(ex.getMessage());
             }
