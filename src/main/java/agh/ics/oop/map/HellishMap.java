@@ -4,13 +4,14 @@ package agh.ics.oop.map;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.interfaces.IGrassGenerator;
 
 import java.util.Random;
 
 public class HellishMap extends AbstractWorldMap {
 
-    public HellishMap(SimulationConfiguration configuration) {
-        super(configuration);
+    public HellishMap(SimulationConfiguration configuration, IGrassGenerator terrain) {
+        super(configuration, terrain);
     }
 
 

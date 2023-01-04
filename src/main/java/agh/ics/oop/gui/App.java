@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 
 
-
 public class App extends Application {
     private SimulationConfiguration currentConfiguration;
 

@@ -76,6 +76,9 @@ public class Animal implements IMapElement{
     public void subtractEnergy(int subtractedEnergy) {
         this.energy -= subtractedEnergy;
     }
+    public void addEnergy(int addedEnergy) {
+        this.energy += addedEnergy;
+    }
 
     public void move(){
         activeGene = behavior.turn(activeGene, genomes.length);

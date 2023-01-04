@@ -1,7 +1,9 @@
 package agh.ics.oop.interfaces;
 
+import agh.ics.oop.Vector2d;
 import agh.ics.oop.grass.Grass;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,8 +15,11 @@ public interface IGrassGenerator {
 
     void placeGrasses();
 
-    List<Grass> getGrass();
+    HashMap<Vector2d, Grass> getGrass();
 
     void removeGrass(Grass grass);
+    void removeGrass(Vector2d position);
+
+    Grass grassAt(Vector2d position);
 
 }

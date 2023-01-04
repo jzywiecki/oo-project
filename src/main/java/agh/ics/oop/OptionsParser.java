@@ -63,7 +63,8 @@ public class OptionsParser {
             Integer.parseInt(props.getProperty("maxMutations")),
             mutationVariant,
             Integer.parseInt(props.getProperty("genomesLength")),
-            behaviorVariant
+            behaviorVariant,
+            Integer.parseInt(props.getProperty("dailyEnergyCost"))
         );
 
 

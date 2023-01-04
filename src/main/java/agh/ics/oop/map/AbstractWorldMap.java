@@ -3,7 +3,9 @@ package agh.ics.oop.map;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.animal.AnimalComparator;
 import agh.ics.oop.grass.Grass;
+import agh.ics.oop.interfaces.IGrassGenerator;
 import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
@@ -16,22 +18,22 @@ import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
-    private final Map<Vector2d, LinkedList<IMapElement>> mapElements = new HashMap<>();
+    private final Map<Vector2d, LinkedList<Animal>> animalMap = new HashMap<>();
     protected final Vector2d upperBound;
     protected final Vector2d lowerBound = new Vector2d(0, 0);
-
     protected final SimulationConfiguration configuration;
+    private final IGrassGenerator terrain;
 
-    public AbstractWorldMap(SimulationConfiguration configuration) {
+    public AbstractWorldMap(SimulationConfiguration configuration, IGrassGenerator terrain) {
         this.upperBound = configuration.bounds();
         this.configuration = configuration;
-
+        this.terrain = terrain;
     }
-
 
     @Override
     public LinkedList<IMapElement> objectsAt(Vector2d position) {
-        return mapElements.get(position);
+//        return mapElements.get(position);
+        return null;
     }
 
     @Override
@@ -40,22 +42,24 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         if(!position.follows(lowerBound) && !position.precedes(upperBound)){
             throw new IllegalArgumentException("Illegal animal placement on position: " + position);
         }
-
-        if(mapElements.containsKey(animal.position())){
-            mapElements.get(position).add(animal);
+        animal.addObserver(this);
+        if(animalMap.containsKey(animal.position())){
+            animalMap.get(position).push(animal);
             return;
         }
-        animal.addObserver(this);
-        LinkedList<IMapElement> val = new LinkedList<>();
+        LinkedList<Animal> val = new LinkedList<>();
         val.add(animal);
-        mapElements.put(position,val);
+        animalMap.put(position,val);
     }
 
     //required for mapVisualizer, returns Animal if position is not empty
     @Override
     public IMapElement objectAt(Vector2d position){
-        if(mapElements.containsKey(position)){
+        if(animalMap.containsKey(position)){
             return new Animal(MapDirection.NORTH, new Vector2d(3, 3), this, null, null, 20);
+        }
+        if(terrain.grassAt(position) != null){
+            return new Grass(new Vector2d(1, 1));
         }
         return null;
     }
@@ -64,55 +68,55 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     @Override
     public void deleteAnimal(Animal animal) {
         animal.removeObserver(this);
-        var objectsOnPosition = mapElements.get(animal.position());
+        var objectsOnPosition = animalMap.get(animal.position());
         objectsOnPosition.remove(animal);
 
         if(objectsOnPosition.isEmpty()){
-            mapElements.remove(animal.position());
+            animalMap.remove(animal.position());
         }
     }
 
     //get grass at specific position
     public Grass getGrassAtPosition(Vector2d position){
-        LinkedList<IMapElement> elementsAtPosition = mapElements.get(position);
-        Object[] elements = elementsAtPosition.toArray();
-        for (Object element: elements){
-            if(element instanceof Grass){
-                return (Grass) element;
-            }
-        }
-        return null;
+        return terrain.grassAt(position);
     }
 
     //move animal in mapElements
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal animal){
-
-        var objectsOnPosition = mapElements.get(oldPosition);
+        var objectsOnPosition = animalMap.get(oldPosition);
         objectsOnPosition.remove(animal);
 
         if(objectsOnPosition.isEmpty()){
-            mapElements.remove(oldPosition);
+            animalMap.remove(oldPosition);
         }
 
-        if(mapElements.containsKey(newPosition)){
-            mapElements.get(newPosition).push(animal);
+        if(animalMap.containsKey(newPosition)){
+            animalMap.get(newPosition).push(animal);
+            return;
         }
-        LinkedList<IMapElement> val = new LinkedList<>();
+        LinkedList<Animal> val = new LinkedList<>();
         val.add(animal);
-        mapElements.put(newPosition,val);
+        animalMap.put(newPosition,val);
+
+    }
+
+    public void eatGrass(){
+        var positions = animalMap.keySet();
+        positions.forEach((key)->{
+            if(terrain.grassAt(key) != null){
+               var strongest =  animalMap.get(key).stream().max( new AnimalComparator());
+               if(strongest.isEmpty()){ return;}
+               terrain.removeGrass(key);
+               strongest.get().addEnergy(configuration.grassEnergy());
+            }
+        });
     }
 
     @Override
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
-        return map.draw(lowerBound, upperBound);
+        return map.draw(lowerBound, upperBound.subtract(new Vector2d(1, 1)));
     }
 
-    public Vector2d getLowerBound() {
-        return lowerBound;
-    }
 
-    public Vector2d getUpperBound() {
-        return upperBound;
-    }
 }

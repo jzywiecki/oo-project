@@ -42,10 +42,12 @@ public interface IWorldMap {
 
     void deleteAnimal(Animal animal);
 
-    Vector2d getLowerBound();
-
-    Vector2d getUpperBound();
-
     Grass getGrassAtPosition(Vector2d position);
+
+    /**
+     * Make the strongest animal on each position eat grass if present
+     */
+    void eatGrass();
+
 }
 

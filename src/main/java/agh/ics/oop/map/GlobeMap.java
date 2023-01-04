@@ -3,10 +3,11 @@ package agh.ics.oop.map;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.interfaces.IGrassGenerator;
 
 public class GlobeMap extends AbstractWorldMap {
-    public GlobeMap(SimulationConfiguration configuration) {
-        super(configuration);
+    public GlobeMap(SimulationConfiguration configuration, IGrassGenerator terrain) {
+        super(configuration, terrain);
     }
 
 

@@ -7,25 +7,33 @@ import agh.ics.oop.behavior.BitOfMadness;
 import agh.ics.oop.behavior.FullPredestination;
 import agh.ics.oop.interfaces.IBehaviorGenerator;
 import agh.ics.oop.animal.AnimalComparator;
+import agh.ics.oop.interfaces.IGrassGenerator;
 import agh.ics.oop.interfaces.IReproduction;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.*;
 import agh.ics.oop.reproduction.FullRandomness;
 import agh.ics.oop.reproduction.SlightCorrection;
+import agh.ics.oop.terrain.ForestedEquators;
+import agh.ics.oop.terrain.ToxicCorpses;
 
 
 public class SimulationEngine {
     private IWorldMap map;
     private IBehaviorGenerator behavior;
     private IReproduction reproduction;
+    private IGrassGenerator terrain;
     private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
 
     public SimulationEngine(SimulationConfiguration configuration){
         this.configuration = configuration;
+        switch (configuration.grassVariant()){
+            case DEAD -> this.terrain = new ForestedEquators(this.configuration);
+            case MIDDLE -> this.terrain =new ToxicCorpses(this.configuration);
+        }
         switch (configuration.map()){
-            case GLOBE_MAP -> this.map = new GlobeMap(configuration);
-            case HELLISH_MAP -> this.map =new HellishMap(configuration);
+            case GLOBE_MAP -> this.map = new GlobeMap(configuration, terrain);
+            case HELLISH_MAP -> this.map =new HellishMap(configuration, terrain);
         }
         switch (configuration.behavior()){
             case FULL_PREDESTINATION -> this.behavior = new FullPredestination();
@@ -42,44 +50,50 @@ public class SimulationEngine {
         //initialize
         generateAnimals(configuration.numberOfAnimals());
 
-
+       System.out.println(map);
         //simulation
        for (int i = 0; i< 20; i++) {
            //phase 1 dead cleanup
-
-           for (Animal animal : animals) {
-               if (animal.getEnergy() <= 0) {
-                   map.deleteAnimal(animal);
-                   animals.remove(animal);
-               }
-           }
-
-           //phase 2 movement
-
-           animals.forEach(Animal::move);
+          var deadAnimals = animals.stream().filter(animal -> animal.getEnergy() <= 0).toList();
+            deadAnimals.forEach(animal -> {
+              map.deleteAnimal(animal);
+              animals.remove(animal);
+              System.out.println("GOT ONE!");
+            });
+           //phase 2 movement and energy loss
+           animals.forEach(animal -> {
+               animal.move();
+               animal.subtractEnergy(configuration.dailyEnergyCost());
+           });
            System.out.println(map);
 
-           // phase 3 eating
 
-       }
+           // phase 3 eating
+            map.eatGrass();
+
            // phase 4 breeding
            LinkedList<Vector2d> positions = new LinkedList<>();
+           FullRandomness makeAnimal = new FullRandomness(map, new BitOfMadness(), this.configuration);
            animals.forEach(animal -> {
                if (!positions.contains(animal.position())) {
                    positions.add(animal.position());
                }
            });
            positions.forEach(position -> {
-               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position)).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
+               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position) && animal.getEnergy() >= configuration.energyToReproduction()).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
                if (animalsToReproduction.length == 2) {
-                   Animal newAnimal = reproduction.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
-                   map.place(newAnimal);
-                   this.animals.add(newAnimal);
+                   Animal newAnimal = makeAnimal.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
+                   if (newAnimal != null){
+                       map.place(newAnimal);
+                       this.animals.add(newAnimal);
+
+                   }
                }
            });
 
            // phase 5 grass growth
-
+            terrain.placeGrasses();
+       }
     }
 
     private void generateAnimals(int n){

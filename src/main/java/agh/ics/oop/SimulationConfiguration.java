@@ -34,7 +34,9 @@ public record SimulationConfiguration(
 //    długość genomu zwierzaków,
         int genomesLength,
 //    wariant zachowania zwierzaków (wyjaśnione w sekcji poniżej),
-        BehaviorVariant behavior
+        BehaviorVariant behavior,
+//    energia, która jest odejmowana każdego dnia
+        int dailyEnergyCost
 ) {
 
 
@@ -56,6 +58,7 @@ public record SimulationConfiguration(
                 ", mutationVariant=" + mutation +
                 ", genomesLength=" + genomesLength +
                 ", behaviorVariant=" + behavior +
+                ", dailyEnergyCost=" + dailyEnergyCost +
                 '}';
     }
 }

@@ -1,66 +1,58 @@
 package agh.ics.oop.terrain;
 
 
-import agh.ics.oop.Grass;
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
-import agh.ics.oop.interfaces.IWorldMap;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
-
-
-public class ForestedEquators extends AbstractTerrain {
+public class    ForestedEquators extends AbstractTerrain {
     private int lowerEquatorBound;
     private int higherEquatorBound;
     private int mapHeight;
     private int mapWidth;
 
 
-    public ForestedEquators(IWorldMap map, SimulationConfiguration configuration) {
-        super(map, configuration);
+    public ForestedEquators(SimulationConfiguration configuration) {
+        super(configuration);
         calculateEquatorBounds();
     }
 
     private void calculateEquatorBounds(){
-        Vector2d mapLowerBound = map.getLowerBound();
-        Vector2d mapUpperBound = map.getUpperBound();
-        mapHeight = mapUpperBound.y() - mapLowerBound.y() + 1;
-        mapWidth = mapUpperBound.x() - mapLowerBound.x() + 1;
-        lowerEquatorBound = (int) Math.floor(0.40 * mapHeight);
-        higherEquatorBound = (int) Math.ceil(0.60 * mapHeight)-1;
+        mapHeight = configuration.bounds().y();
+        mapWidth =  configuration.bounds().x();
+
+        int equatorWidth = Math.toIntExact(Math.round(mapHeight * 0.2));
+        lowerEquatorBound = (mapHeight - equatorWidth)/2;
+        higherEquatorBound = (mapHeight - equatorWidth)/2 + equatorWidth - 1;
+        System.out.println(lowerEquatorBound + " xd? " + higherEquatorBound);
     }
 
     @Override
-    protected void placeOnPreferedPosition(int quantity) {
-        Vector2d[] equator = new Vector2d[mapWidth * (higherEquatorBound - lowerEquatorBound + 1)];
-        int counter = 0;
+    protected void placeOnPreferredPosition(int quantity) {
+        List<Vector2d> equator = new LinkedList<>();
         for (int i = lowerEquatorBound; i <=higherEquatorBound; i++){
             for (int j = 0; j < mapWidth; j++){
-                equator[counter] = new Vector2d(i, j);
-                counter++;
+                equator.add(new Vector2d(j, i));
             }
         }
-
         placeGrass(equator, quantity);
     }
 
     @Override
-    protected void placeOnNonPreferedPosition(int quantity) {
-        Vector2d[] area = new Vector2d[mapWidth*mapHeight - mapWidth * (higherEquatorBound - lowerEquatorBound + 1)];
+    protected void placeOnNonPreferredPosition(int quantity) {
+        List<Vector2d> area = new LinkedList<>();
 
-        int counter = 0;
         for (int i = 0; i <lowerEquatorBound; i++){
             for (int j = 0; j < mapWidth; j++){
-                area[counter] = new Vector2d(i, j);
-                counter++;
+                area.add(new Vector2d(j, i));
             }
         }
-
-        counter = 0;
         for (int i = higherEquatorBound+1; i < mapHeight; i++){
             for (int j = 0; j < mapWidth; j++){
-                area[counter] = new Vector2d(i, j);
-                counter++;
+                area.add(new Vector2d(j, i));
             }
         }
 
