@@ -1,6 +1,7 @@
 package agh.ics.oop.gui;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
+import agh.ics.oop.grass.Grass;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -33,13 +34,16 @@ public class GuiElementBox {
             }
             label = new Label("z" + position.toString());
         }
-        else{
+        else if (object instanceof Grass){
             try {
                 image = new Image(new FileInputStream("src/main/resources/grass.png"));
             }catch (FileNotFoundException ex){
                 System.out.println(ex.getMessage());
             }
             label = new Label("Trawa");
+        }
+        else{
+            label = new Label("");
         }
 
         ImageView imageView = new ImageView(image);

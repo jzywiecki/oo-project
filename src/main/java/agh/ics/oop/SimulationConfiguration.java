@@ -39,28 +39,24 @@ public record SimulationConfiguration(
         int dailyEnergyCost
 ) {
 
-
     @Override
     public String toString() {
-        return "SimulationConfiguration{" +
+        return "Current configuration: \n" +
                 "bounds=" + bounds +
-                ", mapVariant=" + map +
-                ", startingGrass=" + startingGrass +
-                ", grassEnergy=" + grassEnergy +
-                ", grassGrowth=" + grassGrowth +
-                ", grassVariant=" + grassVariant +
-                ", numberOfAnimals=" + numberOfAnimals +
-                ", startingEnergy=" + startingEnergy +
-                ", reproductionRequirement=" + reproductionRequirement +
-                ", energyToReproduction=" + energyToReproduction +
-                ", minMutations=" + minMutations +
-                ", maxMutations=" + maxMutations +
-                ", mutationVariant=" + mutation +
-                ", genomesLength=" + genomesLength +
-                ", behaviorVariant=" + behavior +
-                ", dailyEnergyCost=" + dailyEnergyCost +
-                '}';
+                "\n mapVariant=" + map +
+                "\n startingGrass=" + startingGrass +
+                "\n grassEnergy=" + grassEnergy +
+                "\n grassGrowth=" + grassGrowth +
+                "\n grassVariant=" + grassVariant +
+                "\n numberOfAnimals=" + numberOfAnimals +
+                "\n startingEnergy=" + startingEnergy +
+                "\n reproductionRequirement=" + reproductionRequirement +
+                "\n energyToReproduction=" + energyToReproduction +
+                "\n minMutations=" + minMutations +
+                "\n maxMutations=" + maxMutations +
+                "\n mutationVariant=" + mutation +
+                "\n genomesLength=" + genomesLength +
+                "\n dailyEnergyCost=" + dailyEnergyCost +
+                "\n behaviorVariant=" + behavior;
     }
 }
-
-

@@ -1,6 +1,5 @@
 package agh.ics.oop.terrain;
 
-
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 
@@ -27,7 +26,6 @@ public class    ForestedEquators extends AbstractTerrain {
         int equatorWidth = Math.toIntExact(Math.round(mapHeight * 0.2));
         lowerEquatorBound = (mapHeight - equatorWidth)/2;
         higherEquatorBound = (mapHeight - equatorWidth)/2 + equatorWidth - 1;
-        System.out.println(lowerEquatorBound + " xd? " + higherEquatorBound);
     }
 
     @Override

@@ -1,13 +1,15 @@
 package agh.ics.oop.terrain;
 
-
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.grass.Grass;
 import agh.ics.oop.interfaces.IGrassGenerator;
 import java.util.Collections;
+import agh.ics.oop.interfaces.IWorldMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
+
 
 public abstract class AbstractTerrain implements IGrassGenerator {
     protected SimulationConfiguration configuration;
@@ -51,7 +53,7 @@ public abstract class AbstractTerrain implements IGrassGenerator {
         return grasses.get(position);
     }
 
-    private boolean isGrassAt(Vector2d position){
+    public boolean isGrassAt(Vector2d position){
         return grassAt(position) != null;
     }
 

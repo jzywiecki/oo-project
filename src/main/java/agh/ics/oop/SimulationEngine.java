@@ -17,7 +17,7 @@ import agh.ics.oop.terrain.ForestedEquators;
 import agh.ics.oop.terrain.ToxicCorpses;
 
 
-public class SimulationEngine {
+public class SimulationEngine implements Runnable {
     private IWorldMap map;
     private IBehaviorGenerator behavior;
     private IReproduction reproduction;
@@ -46,9 +46,9 @@ public class SimulationEngine {
     }
 
 
-   public void run(){
-        //initialize
-        generateAnimals(configuration.numberOfAnimals());
+   public void run() {
+       //initialize
+       generateAnimals(configuration.numberOfAnimals());
 
        System.out.println(map);
         //simulation
@@ -70,6 +70,7 @@ public class SimulationEngine {
 
            // phase 3 eating
             map.eatGrass();
+
 
            // phase 4 breeding
            LinkedList<Vector2d> positions = new LinkedList<>();
@@ -101,7 +102,7 @@ public class SimulationEngine {
         for(int i = 0; i< n; i++){
             int x = rng.nextInt(configuration.bounds().x());
             int y = rng.nextInt(configuration.bounds().y());
-                Animal animal = new Animal( MapDirection.NORTH, new Vector2d(x,y), map, generateGenome(), behavior, configuration.startingEnergy());
+                Animal animal = new Animal( MapDirection.EAST, new Vector2d(x,y), map, generateGenome(), behavior, configuration.startingEnergy());
                 map.place(animal);
                 this.animals.add(animal);
         }
@@ -117,4 +118,7 @@ public class SimulationEngine {
         return genomes;
     }
 
+    public IWorldMap getMap() {
+        return map;
+    }
 }

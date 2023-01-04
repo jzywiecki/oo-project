@@ -30,7 +30,7 @@ public class World {
             System.out.println(err);
             System.exit(-2);
         }
-
+//
 //        try {
 //            Application.launch(App.class, args);
 //        } catch (IllegalArgumentException err) {
