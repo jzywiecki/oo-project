@@ -14,8 +14,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SimulationViewController implements IGuiObserver {
     //controls
@@ -121,19 +125,49 @@ public class SimulationViewController implements IGuiObserver {
         selectedDeath.setText("Day of death: " + newSelectedDeath);
     }
 
-    public void generateSimulation(SimulationEngine engine){
+    public void generateSimulation(SimulationEngine engine) {
         this.engine = engine;
         this.thread = new Thread(this.engine);
         newStats = this.engine.getStats();
         this.thread.start();
         stop.setOnAction(e -> this.thread.suspend());
         start.setOnAction(e -> this.thread.resume());
+        System.out.println(this.engine.isCsv());
     }
 
+    private String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .map(this::escapeSpecialCharacters)
+                .collect(Collectors.joining(","));
+    }
+
+    private String escapeSpecialCharacters(String data) {
+        String escapedData = data.replaceAll("\\R", " ");
+        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+            data = data.replace("\"", "\"\"");
+            escapedData = "\"" + data + "\"";
+        }
+        return escapedData;
+    }
+    
     @Override
     public void positionChanged() {
         try {
             Platform.runLater(()->{
+                if (this.engine.isCsv()){
+                    File csvOutputFile = new File("src/main/resources/stats.csv");
+                    List<String[]> dataLines = new ArrayList<>();
+                    dataLines.add(new String[]
+                            { "" + this.engine.getStats().getNumberOfAnimals(), "" + this.engine.getStats().getNumberOfGrass() });
+                    try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+                        dataLines.stream()
+                                .map(this::convertToCSV)
+                                .forEach(pw::println);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
                 newStats = this.engine.getStats();
                 changeStats(newStats.getCurrentDay(), newStats.getNumberOfAnimals(), newStats.getNumberOfGrass(), newStats.getEmptySpaces(), newStats.getMostPopularGenome(), newStats.getAverageEnergy(), newStats.getAverageDaysLived());
                 drawMap(this.engine.getMap());

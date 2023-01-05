@@ -23,6 +23,7 @@ abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         return upperBound;
     }
 
+    @Override
     public Vector2d getLowerBound() {
         return lowerBound;
     }

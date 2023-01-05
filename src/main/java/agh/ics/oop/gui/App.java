@@ -25,6 +25,7 @@ public class App extends Application {
     private Button startButton;
     private Label errorMessage;
     private Stage stage;
+    private CheckBox checkBox;
 
 
     @Override
@@ -36,8 +37,8 @@ public class App extends Application {
         fileChooser = new FileChooser();
         load = new Button("Load Configuration");
         loadConfiguration(primaryStage);
-        CheckBox checkBox = new CheckBox("Save stats to CSV");
-        checkBox.setIndeterminate(false);
+        checkBox = new CheckBox("Save stats to CSV");
+        checkBox.setSelected(false);
         configurationDescription = new Label("");
         configurationDescription.setTextAlignment(TextAlignment.CENTER);
         //start symulacji
@@ -75,9 +76,7 @@ public class App extends Application {
         } else {
             startButton.setOnAction(e -> {
                 errorMessage.setText("");
-                SimulationEngine engine = new SimulationEngine(currentConfiguration);
-
-
+                SimulationEngine engine = new SimulationEngine(currentConfiguration, checkBox.isSelected());
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulationView.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 960, 569);
@@ -85,7 +84,8 @@ public class App extends Application {
                     engine.addObserver(viewController1);
                     viewController1.generateSimulation(engine);
                     Stage stage = new Stage();
-                    stage.setTitle("New Window");
+                    stage.setResizable(false);
+                    stage.setTitle("Simulation");
                     stage.setScene(scene);
                     stage.show();
 

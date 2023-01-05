@@ -8,5 +8,17 @@ import agh.ics.oop.animal.Animal;
  */
 
 public interface IPositionChangeObserver {
+
+
+    /**
+     * Trigger action based on given movement of animal
+     *
+     * @param oldPosition
+     *            Position before movement.
+     * @param newPosition
+     *            Position after movement.
+     * @param animal
+     *            Animal that moved.
+     */
     void positionChanged(Vector2d oldPosition, Vector2d newPosition, Animal animal);
 }

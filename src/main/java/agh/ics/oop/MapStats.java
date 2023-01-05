@@ -35,7 +35,7 @@ public class MapStats {
         for (int i = 0; i < animalsGenomes.length; i++){
             for (int j = 0; j < animalsGenomes.length; j++){
                 if (!(i==j)){
-                    if (animalsGenomes[i].equals(animalsGenomes[j])){
+                    if (Arrays.equals(animalsGenomes[i], animalsGenomes[j])){
                         counter[i]++;
                         counter[j]++;
                     }
@@ -43,7 +43,7 @@ public class MapStats {
             }
         }
         int mostPopularGenomeNumber = Arrays.stream(counter).max().getAsInt();
-        int answer[] = new int[configuration.genomesLength()];
+        int[] answer = new int[configuration.genomesLength()];
         for (int i = 0; i < counter.length; i++){
             if (counter[i] == mostPopularGenomeNumber){
                 answer = animalsGenomes[i];

@@ -16,21 +16,17 @@ public class FullRandomness extends AbstractReproduction {
     }
 
     @Override
-    public int[] mutate(int[] genome, int mutationsNumber) {
+    protected int[] mutate(int[] genome, int mutationsNumber) {
         List<Integer> genomes = new ArrayList<>();
         for (int i = 0; i < genome.length; i++){
             genomes.add(i);
         }
-        shuffle(genomes);
+        Collections.shuffle(genomes);
 
         for (int i = 0; i < mutationsNumber; i++) {
             genome[genomes.get(i)] = rng.nextInt(8);
         }
         return genome;
-    }
-
-    public static void shuffle(List<?> collection) {
-        Collections.shuffle(collection, rng);
     }
 }
 

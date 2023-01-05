@@ -27,6 +27,8 @@ public abstract class AbstractReproduction implements IReproduction {
         return (parent1.getEnergy() / (parent1.getEnergy() + parent2.getEnergy())) + parent1.getEnergy()>parent2.getEnergy()? 1 : 0;
     }
 
+    abstract protected int[] mutate(int[] genome, int mutationsNumber);
+
     //tworzenie genomu
     private int[] createGenome(Animal parent1, Animal parent2) {
         int[] genome = new int[config.genomesLength()];
@@ -49,25 +51,23 @@ public abstract class AbstractReproduction implements IReproduction {
             weakerAnimal = parent1;
         }
 
-        int[] strongerAnimalGenom = strongerAnimal.getGenomes();
-        int[] weakerAnimalGenom = weakerAnimal.getGenomes();
+        int[] strongerAnimalGenome = strongerAnimal.getGenomes();
+        int[] weakerAnimalGenome = weakerAnimal.getGenomes();
         if (site == 0){
 
             if (calculatePart(strongerAnimal, weakerAnimal) >= 0)
-                System.arraycopy(strongerAnimalGenom, 0, genome, 0, calculatePart(strongerAnimal, weakerAnimal));
+                System.arraycopy(strongerAnimalGenome, 0, genome, 0, calculatePart(strongerAnimal, weakerAnimal));
             if (config.genomesLength() - calculatePart(strongerAnimal, weakerAnimal) >= 0)
-                System.arraycopy(weakerAnimalGenom, calculatePart(strongerAnimal, weakerAnimal), genome, calculatePart(strongerAnimal, weakerAnimal), config.genomesLength() - calculatePart(strongerAnimal, weakerAnimal));
+                System.arraycopy(weakerAnimalGenome, calculatePart(strongerAnimal, weakerAnimal), genome, calculatePart(strongerAnimal, weakerAnimal), config.genomesLength() - calculatePart(strongerAnimal, weakerAnimal));
         }
         else {
             if (calculatePart(weakerAnimal, strongerAnimal) >= 0)
-                System.arraycopy(weakerAnimalGenom, 0, genome, 0, calculatePart(weakerAnimal, strongerAnimal));
+                System.arraycopy(weakerAnimalGenome, 0, genome, 0, calculatePart(weakerAnimal, strongerAnimal));
             if (config.genomesLength() - calculatePart(weakerAnimal, strongerAnimal) >= 0)
-                System.arraycopy(strongerAnimalGenom, calculatePart(weakerAnimal, strongerAnimal), genome, calculatePart(weakerAnimal, strongerAnimal), config.genomesLength() - calculatePart(weakerAnimal, strongerAnimal));
+                System.arraycopy(strongerAnimalGenome, calculatePart(weakerAnimal, strongerAnimal), genome, calculatePart(weakerAnimal, strongerAnimal), config.genomesLength() - calculatePart(weakerAnimal, strongerAnimal));
         }
 
-        mutate(genome, rand.nextInt((config.maxMutations() - config.minMutations()) + 1) + config.minMutations());
-
-        return genome;
+        return mutate(genome, rand.nextInt((config.maxMutations() - config.minMutations()) + 1) + config.minMutations());
     }
 
     //stworzenie zwierzęcia z gotowym genomem i energią
@@ -79,6 +79,8 @@ public abstract class AbstractReproduction implements IReproduction {
         Animal child = new Animal(MapDirection.values()[newGenome[0]], parent1.position(), map, newGenome, behavior, config.startingEnergy());
         parent1.subtractEnergy(config.energyToReproduction());
         parent2.subtractEnergy(config.energyToReproduction());
+        parent1.addChild();
+        parent2.addChild();
         return child;
     }
 }

@@ -24,13 +24,14 @@ public class SimulationEngine implements Runnable {
     private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
     private MapStats mapStats;
-    private LinkedList<Integer> dayOfAnimalsDeath = new LinkedList<Integer>();
+    private final LinkedList<Integer> dayOfAnimalsDeath = new LinkedList<Integer>();
+    private boolean csv;
 
 
     private final ArrayList<IGuiObserver> iGuiObservers = new ArrayList<>();
     private final ArrayList<IDeathObserver> iDeathObservers = new ArrayList<>();
 
-    public SimulationEngine(SimulationConfiguration configuration){
+    public SimulationEngine(SimulationConfiguration configuration, boolean csv){
         this.configuration = configuration;
         switch (configuration.grassVariant()){
             case MIDDLE -> this.terrain = new ForestedEquators(this.configuration);
@@ -93,16 +94,15 @@ public class SimulationEngine implements Runnable {
 
            // phase 4 breeding
            LinkedList<Vector2d> positions = new LinkedList<>();
-           FullRandomness makeAnimal = new FullRandomness(map, new BitOfMadness(), this.configuration);
            animals.forEach(animal -> {
                if (!positions.contains(animal.position())) {
                    positions.add(animal.position());
                }
            });
            positions.forEach(position -> {
-               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position) && animal.getEnergy() >= configuration.energyToReproduction()).sorted((a1, a2) -> new AnimalComparator().compare((Animal) a1, (Animal) a2)).limit(2).toArray();
+               Object[] animalsToReproduction = animals.stream().filter(animal -> animal.position().equals(position) && animal.getEnergy() >= configuration.energyToReproduction()).sorted(new AnimalComparator()).limit(2).toArray();
                if (animalsToReproduction.length == 2) {
-                   Animal newAnimal = makeAnimal.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
+                   Animal newAnimal = this.reproduction.createAnimal((Animal) animalsToReproduction[0], (Animal) animalsToReproduction[1]);
                    if (newAnimal != null){
                        map.place(newAnimal);
                        this.animals.add(newAnimal);
@@ -171,7 +171,15 @@ public class SimulationEngine implements Runnable {
         return mapStats;
     }
 
+    public SimulationConfiguration getConfiguration() {
+        return configuration;
+    }
+
     public LinkedList<Integer> getDayOfAnimalsDeath() {
         return dayOfAnimalsDeath;
+    }
+
+    public boolean isCsv() {
+        return csv;
     }
 }

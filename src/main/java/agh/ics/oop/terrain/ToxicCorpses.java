@@ -10,8 +10,8 @@ import java.util.*;
 
 public class ToxicCorpses extends AbstractTerrain implements IDeathObserver {
     private record DeadCounter(int numberOfDead, LinkedList<Vector2d> positions){}
-    private TreeSet<DeadCounter> set = new TreeSet<>(Comparator.comparingInt(DeadCounter::numberOfDead));
-    private HashMap<Vector2d, Integer> map = new HashMap<>();
+    private final TreeSet<DeadCounter> set = new TreeSet<>(Comparator.comparingInt(DeadCounter::numberOfDead));
+    private final HashMap<Vector2d, Integer> map = new HashMap<>();
     private final int area;
     public ToxicCorpses(SimulationConfiguration configuration) {
         super(configuration);

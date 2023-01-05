@@ -17,12 +17,12 @@ public class SlightCorrection extends AbstractReproduction {
     }
 
     @Override
-    public int[] mutate(int[] genome, int mutationsNumber) {
+    protected int[] mutate(int[] genome, int mutationsNumber) {
         List<Integer> genomes = new ArrayList<>();
         for (int i = 0; i < genome.length; i++){
             genomes.add(i);
         }
-        shuffle(genomes);
+        Collections.shuffle(genomes);
 
         for (int i = 0; i < mutationsNumber; i++) {
             if(rng.nextInt(2) == 0){
@@ -34,10 +34,6 @@ public class SlightCorrection extends AbstractReproduction {
 
         }
         return genome;
-    }
-
-    public static void shuffle(List<?> collection) {
-        Collections.shuffle(collection, rng);
     }
 }
 

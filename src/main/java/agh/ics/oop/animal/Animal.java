@@ -6,9 +6,9 @@ import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.Vector2d;
+
 import java.util.ArrayList;
 import java.util.Objects;
-
 
 
 public class Animal implements IMapElement{
@@ -17,7 +17,7 @@ public class Animal implements IMapElement{
     private final IBehaviorGenerator behavior;
 
     private final int[] genomes;
-    protected int activeGene = 0;
+    private int activeGene = 0;
 
     private MapDirection direction;
     private Vector2d position;
@@ -33,6 +33,10 @@ public class Animal implements IMapElement{
         this.genomes = genomes;
         this.behavior = behavior;
         this.energy = energy;
+    }
+
+    public void addChild(){
+        numberOfChildren +=1;
     }
 
     public MapDirection getDirection() {
@@ -58,12 +62,6 @@ public class Animal implements IMapElement{
     public void turn(int x){
         this.direction = this.direction.add(x);
     }
-
-    public boolean isAt(Vector2d target){
-        return Objects.equals(this.position, target);
-    }
-
-    public boolean isFacing(MapDirection target){ return direction.equals(target); }
 
     public void addObserver(IPositionChangeObserver observer){
         observerList.add(observer);

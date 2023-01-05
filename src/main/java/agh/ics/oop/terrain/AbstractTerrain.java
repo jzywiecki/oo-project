@@ -5,8 +5,6 @@ import agh.ics.oop.Vector2d;
 import agh.ics.oop.grass.Grass;
 import agh.ics.oop.interfaces.IGrassGenerator;
 import java.util.Collections;
-import agh.ics.oop.interfaces.IWorldMap;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 
@@ -61,7 +59,7 @@ public abstract class AbstractTerrain implements IGrassGenerator {
 
     protected abstract List<Vector2d> getNonPreferredPosition();
 
-    protected void placeGrass(List<Vector2d> availablePositions, int quantityOfGrass){
+    private void placeGrass(List<Vector2d> availablePositions, int quantityOfGrass){
         Collections.shuffle(availablePositions);
         for (Vector2d position: availablePositions){
             if (this.grassAt(position) == null){
