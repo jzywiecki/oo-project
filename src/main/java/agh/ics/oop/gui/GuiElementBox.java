@@ -32,7 +32,7 @@ public class GuiElementBox {
             } catch (FileNotFoundException ex){
                 System.out.println(ex.getMessage());
             }
-            label = new Label("z" + position.toString());
+            label = new Label("Energy: " + animal.getEnergy());
         }
         else if (object instanceof Grass){
             try {
@@ -40,7 +40,7 @@ public class GuiElementBox {
             }catch (FileNotFoundException ex){
                 System.out.println(ex.getMessage());
             }
-            label = new Label("Trawa");
+            label = new Label("");
         }
         else{
             label = new Label("");

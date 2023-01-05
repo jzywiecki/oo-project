@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import java.util.LinkedList;
 import java.util.Objects;
 
 public record Vector2d(int x, int y) {
@@ -51,5 +52,11 @@ public record Vector2d(int x, int y) {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public LinkedList<Vector2d> toList(){
+        var newList = new LinkedList<Vector2d>();
+        newList.add(this);
+        return newList;
     }
 }

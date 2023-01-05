@@ -23,14 +23,21 @@ public class SimulationEngine implements Runnable {
     private IGrassGenerator terrain;
     private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
+    private MapStats mapStats;
+    private LinkedList<Integer> dayOfAnimalsDeath = new LinkedList<Integer>();
 
-    private final ArrayList<IGuiObserver> observerList = new ArrayList<>();
+
+    private final ArrayList<IGuiObserver> iGuiObservers = new ArrayList<>();
+    private final ArrayList<IDeathObserver> iDeathObservers = new ArrayList<>();
 
     public SimulationEngine(SimulationConfiguration configuration){
         this.configuration = configuration;
         switch (configuration.grassVariant()){
-            case DEAD -> this.terrain = new ForestedEquators(this.configuration);
-            case MIDDLE -> this.terrain =new ToxicCorpses(this.configuration);
+            case MIDDLE -> this.terrain = new ForestedEquators(this.configuration);
+            case DEAD -> {
+                this.terrain = new ToxicCorpses(this.configuration);
+                this.addObserver((ToxicCorpses) this.terrain);
+            }
         }
         switch (configuration.map()){
             case GLOBE_MAP -> this.map = new GlobeMap(configuration, terrain);
@@ -50,15 +57,20 @@ public class SimulationEngine implements Runnable {
    public void run() {
        //initialize
        generateAnimals(configuration.numberOfAnimals());
-
+       mapStats = new MapStats(this.configuration, this);
        System.out.println(map);
         //simulation
-       for (int i = 0; i< 20; i++) {
+       for (int i = 0; i< 40; i++) {
            //phase 1 dead cleanup
           var deadAnimals = animals.stream().filter(animal -> animal.getEnergy() <= 0).toList();
             deadAnimals.forEach(animal -> {
-              map.deleteAnimal(animal);
-              animals.remove(animal);
+                for (IDeathObserver observer : iDeathObservers) {
+                        observer.animalDied(animal.position());
+                }
+                dayOfAnimalsDeath.add(animal.getAge());
+                System.out.println("GOT ONE!");
+                  map.deleteAnimal(animal);
+                  animals.remove(animal);
             });
            //phase 2 movement and energy loss
            animals.forEach(animal -> {
@@ -66,7 +78,7 @@ public class SimulationEngine implements Runnable {
                animal.subtractEnergy(configuration.dailyEnergyCost());
 
            });
-           for (IGuiObserver observer : observerList) {
+           for (IGuiObserver observer : iGuiObservers) {
                try {
                    observer.positionChanged();
                } catch (InterruptedException e) {
@@ -102,6 +114,8 @@ public class SimulationEngine implements Runnable {
 
            // phase 5 grass growth
             terrain.placeGrasses();
+
+            this.mapStats.update(this, configuration);
        }
     }
 
@@ -130,12 +144,35 @@ public class SimulationEngine implements Runnable {
         return map;
     }
 
+    public IGrassGenerator getTerrain() {
+        return terrain;
+    }
+
+    public LinkedList<Animal> getAnimals() {
+        return animals;
+    }
 
     public void addObserver(IGuiObserver observer){
-        observerList.add(observer);
+        iGuiObservers.add(observer);
     }
 
     public void removeObserver(IGuiObserver observer){
-        observerList.remove(observer);
+        iGuiObservers.remove(observer);
+    }
+
+    public void addObserver(IDeathObserver observer){
+        iDeathObservers.add(observer);
+    }
+
+    public void removeObserver(IDeathObserver observer){
+        iDeathObservers.remove(observer);
+    }
+
+    public MapStats getStats() {
+        return mapStats;
+    }
+
+    public LinkedList<Integer> getDayOfAnimalsDeath() {
+        return dayOfAnimalsDeath;
     }
 }

@@ -22,6 +22,7 @@
                </font>
             </Label>
             <Label />
+            <Label fx:id="currentDay" prefHeight="17.0" prefWidth="304.0" text="Day:" />
             <Label fx:id="numberOfAnimals" prefHeight="17.0" prefWidth="290.0" text="Number of animals:" />
             <Label fx:id="numberOfGrass" prefHeight="17.0" prefWidth="264.0" text="Number of grass:" />
             <Label fx:id="numberOfEmptySpaces" prefHeight="17.0" prefWidth="284.0" text="Empty spaces:" />

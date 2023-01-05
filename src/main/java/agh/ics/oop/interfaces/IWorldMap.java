@@ -14,16 +14,14 @@ public interface IWorldMap {
     void place(Animal animal);
 
     /**
-     * Return true if given position on the map is occupied. Should not be
-     * confused with canMove since there might be empty positions where the animal
-     * cannot move.
+     * Return true if given position on the map is occupied.
      *
      * @param position
      *            Position to check.
      * @return True if the position is occupied.
      */
     default boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+        return objectsAt(position) != null;
     }
 
 

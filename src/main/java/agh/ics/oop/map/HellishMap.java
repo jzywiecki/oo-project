@@ -19,13 +19,13 @@ public class HellishMap extends AbstractWorldMap {
     public Vector2d moveAnimal(Animal animal, MapDirection direction) {
 
         var newPosition = animal.position().add(direction.toUnitVector());
-        if(newPosition.follows(lowerBound) && newPosition.precedes(upperBound)){
+        if(newPosition.follows(lowerBound) && newPosition.precedes(upperBound.subtract(new Vector2d(1, 1)))){
             return newPosition;
         }
 
         Random random = new Random();
         animal.subtractEnergy(configuration.energyToReproduction());
-        return new Vector2d(random.nextInt(upperBound.x()), random.nextInt(upperBound.y()));
+        return new Vector2d(random.nextInt(upperBound.x() - 1), random.nextInt(upperBound.y() - 1));
     }
 
 

@@ -15,15 +15,15 @@ public class GlobeMap extends AbstractWorldMap {
     public Vector2d moveAnimal(Animal animal, MapDirection direction) {
 
        var newPosition = animal.position().add(direction.toUnitVector());
-       if(newPosition.y() > upperBound.y() || newPosition.y() < lowerBound.y()){
+       if(newPosition.y() > upperBound.y() - 1 || newPosition.y() < lowerBound.y()){
            animal.turn(4);
            return animal.position();
        }
-        if(newPosition.x() > upperBound.x()){
+        if(newPosition.x() > upperBound.x() - 1){
             return new Vector2d(lowerBound.x(), newPosition.y());
         }
         if(newPosition.x() < lowerBound.x()){
-            return new Vector2d(upperBound.x(), newPosition.y());
+            return new Vector2d(upperBound.x() -1 , newPosition.y());
         }
         return newPosition;
     }

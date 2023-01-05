@@ -82,6 +82,7 @@ public class Animal implements IMapElement{
 
     public void move(){
         activeGene = behavior.turn(activeGene, genomes.length);
+        this.age+=1;
         this.turn(genomes[activeGene]);
         Vector2d newPosition = map.moveAnimal(this, direction);
         for (IPositionChangeObserver observer : observerList) {

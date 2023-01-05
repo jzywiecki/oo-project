@@ -1,5 +1,6 @@
 package agh.ics.oop.gui;
 
+import agh.ics.oop.MapStats;
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.interfaces.IMapElement;
@@ -15,7 +16,7 @@ import javafx.scene.layout.VBox;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
-public class SimulationViewController implements IGuiObserver{
+public class SimulationViewController implements IGuiObserver {
     //controls
     @FXML
     private GridPane mapGridPane;
@@ -68,12 +69,17 @@ public class SimulationViewController implements IGuiObserver{
     @FXML
     private Button newSimulationButton;
 
+    @FXML
+    private Label currentDay;
+
     //simulation
     SimulationEngine engine;
     Thread thread;
 
     protected void drawMap(IWorldMap map){
-        this.mapGridPane = new GridPane();
+        mapGridPane.getColumnConstraints().clear();
+        mapGridPane.getRowConstraints().clear();
+        mapGridPane.getChildren().clear();
         for (int i = 0; i < map.getUpperBound().x(); i++){
             for (int j = 0; j < map.getUpperBound().y(); j++){
                 Vector2d pos = new Vector2d(i, j);
@@ -96,7 +102,8 @@ public class SimulationViewController implements IGuiObserver{
             }
     }
 
-    private void changeStats(int newNumberOfAnimals, int newNumberOfGrass, int newEmptySpaces, int[] newMostPopularGenome, int newAverageEnergy, int newAverageDaysLived){
+    private void changeStats(int newCurrentDay, int newNumberOfAnimals, int newNumberOfGrass, int newEmptySpaces, int[] newMostPopularGenome, int newAverageEnergy, int newAverageDaysLived){
+        currentDay.setText("Day: " + newCurrentDay);
         numberOfAnimals.setText("Number of animals: " + newNumberOfAnimals);
         numberOfGrass.setText("Number of grass: " + newNumberOfGrass);
         numberOfEmptySpaces.setText("Empty spaces: " + newEmptySpaces);
@@ -127,14 +134,13 @@ public class SimulationViewController implements IGuiObserver{
         try {
             Platform.runLater(()->{
                 drawMap(this.engine.getMap());
-                System.out.println("Moved animal");
+                MapStats newStats = this.engine.getStats();
+                changeStats(newStats.getCurrentDay(), newStats.getNumberOfAnimals(), newStats.getNumberOfGrass(), newStats.getEmptySpaces(), newStats.getMostPopularGenome(), newStats.getAverageEnergy(), newStats.getAverageDaysLived());
             });
             Thread.sleep(200);
         } catch (InterruptedException exception) {
             System.out.println(exception.getMessage());
         }
-
     }
-
 
 }

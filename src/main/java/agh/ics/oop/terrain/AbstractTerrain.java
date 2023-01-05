@@ -29,8 +29,8 @@ public abstract class AbstractTerrain implements IGrassGenerator {
             }
 
         }
-        placeOnPreferredPosition(configuration.grassGrowth()-wildGrass);
-        placeOnNonPreferredPosition(wildGrass);
+        placeGrass(getPreferredPosition(), configuration.grassGrowth()-wildGrass);
+        placeGrass(getNonPreferredPosition(), wildGrass);
     }
 
     @Override
@@ -57,9 +57,9 @@ public abstract class AbstractTerrain implements IGrassGenerator {
         return grassAt(position) != null;
     }
 
-    protected abstract void placeOnPreferredPosition(int quantity);
+    protected abstract List<Vector2d> getPreferredPosition();
 
-    protected abstract void placeOnNonPreferredPosition(int quantity);
+    protected abstract List<Vector2d> getNonPreferredPosition();
 
     protected void placeGrass(List<Vector2d> availablePositions, int quantityOfGrass){
         Collections.shuffle(availablePositions);

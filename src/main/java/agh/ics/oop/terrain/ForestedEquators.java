@@ -29,18 +29,18 @@ public class    ForestedEquators extends AbstractTerrain {
     }
 
     @Override
-    protected void placeOnPreferredPosition(int quantity) {
+    protected List<Vector2d> getPreferredPosition() {
         List<Vector2d> equator = new LinkedList<>();
         for (int i = lowerEquatorBound; i <=higherEquatorBound; i++){
             for (int j = 0; j < mapWidth; j++){
                 equator.add(new Vector2d(j, i));
             }
         }
-        placeGrass(equator, quantity);
+        return equator;
     }
 
     @Override
-    protected void placeOnNonPreferredPosition(int quantity) {
+    protected List<Vector2d> getNonPreferredPosition() {
         List<Vector2d> area = new LinkedList<>();
 
         for (int i = 0; i <lowerEquatorBound; i++){
@@ -54,7 +54,7 @@ public class    ForestedEquators extends AbstractTerrain {
             }
         }
 
-        placeGrass(area, quantity);
+        return area;
     }
 
 

@@ -140,4 +140,5 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     }
 
 
+
 }
