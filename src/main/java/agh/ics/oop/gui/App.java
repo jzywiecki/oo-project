@@ -76,7 +76,8 @@ public class App extends Application {
         } else {
             startButton.setOnAction(e -> {
                 errorMessage.setText("");
-                SimulationEngine engine = new SimulationEngine(currentConfiguration, checkBox.isSelected());
+                System.out.println(this.checkBox);
+                SimulationEngine engine = new SimulationEngine(currentConfiguration, this.checkBox.isSelected());
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulationView.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 960, 569);

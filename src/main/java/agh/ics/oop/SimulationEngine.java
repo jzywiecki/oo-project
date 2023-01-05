@@ -32,6 +32,7 @@ public class SimulationEngine implements Runnable {
     private final ArrayList<IDeathObserver> iDeathObservers = new ArrayList<>();
 
     public SimulationEngine(SimulationConfiguration configuration, boolean csv){
+        this.csv = csv;
         this.configuration = configuration;
         switch (configuration.grassVariant()){
             case MIDDLE -> this.terrain = new ForestedEquators(this.configuration);

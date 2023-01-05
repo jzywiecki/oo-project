@@ -78,6 +78,7 @@ public class SimulationViewController implements IGuiObserver {
     SimulationEngine engine;
     Thread thread;
     MapStats newStats;
+    List<String[]> dataLines = new ArrayList<>();
 
     protected void drawMap(IWorldMap map){
         mapGridPane.getColumnConstraints().clear();
@@ -130,9 +131,18 @@ public class SimulationViewController implements IGuiObserver {
         this.thread = new Thread(this.engine);
         newStats = this.engine.getStats();
         this.thread.start();
-        stop.setOnAction(e -> this.thread.suspend());
-        start.setOnAction(e -> this.thread.resume());
+        stop.setOnAction(e -> {
+            this.thread.suspend();
+            start.setDisable(false);
+            stop.setDisable(true);
+        });
+        start.setOnAction(e -> {
+            this.thread.resume();
+            start.setDisable(true);
+            stop.setDisable(false);
+        });
         System.out.println(this.engine.isCsv());
+        start.setDisable(true);
     }
 
     private String convertToCSV(String[] data) {
@@ -156,9 +166,9 @@ public class SimulationViewController implements IGuiObserver {
             Platform.runLater(()->{
                 if (this.engine.isCsv()){
                     File csvOutputFile = new File("src/main/resources/stats.csv");
-                    List<String[]> dataLines = new ArrayList<>();
+
                     dataLines.add(new String[]
-                            { "" + this.engine.getStats().getNumberOfAnimals(), "" + this.engine.getStats().getNumberOfGrass() });
+                            { "" + this.engine.getStats().getCurrentDay(), "" + this.engine.getStats().getNumberOfAnimals(), "" + this.engine.getStats().getNumberOfGrass(), "" + this.engine.getStats().getEmptySpaces(), Arrays.toString(this.engine.getStats().getMostPopularGenome()), "" + this.engine.getStats().getAverageEnergy(), "" + this.engine.getStats().getAverageDaysLived() });
                     try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
                         dataLines.stream()
                                 .map(this::convertToCSV)
