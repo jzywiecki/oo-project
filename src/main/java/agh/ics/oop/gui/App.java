@@ -77,19 +77,21 @@ public class App extends Application {
                 errorMessage.setText("");
                 SimulationEngine engine = new SimulationEngine(currentConfiguration);
 
-                Scene scene;
+
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulationView.fxml"));
-                    scene = new Scene(fxmlLoader.load(), 960, 569);
+                    Scene scene = new Scene(fxmlLoader.load(), 960, 569);
                     SimulationViewController viewController1 = fxmlLoader.getController();
                     engine.addObserver(viewController1);
                     viewController1.generateSimulation(engine);
+                    Stage stage = new Stage();
+                    stage.setTitle("New Window");
+                    stage.setScene(scene);
+                    stage.show();
 
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                stage.setScene(scene);
-                stage.show();
             });
         }
     }

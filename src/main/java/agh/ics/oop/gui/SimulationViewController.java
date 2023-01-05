@@ -5,6 +5,7 @@ import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IWorldMap;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -67,14 +68,12 @@ public class SimulationViewController implements IGuiObserver {
     private Button stop;
 
     @FXML
-    private Button newSimulationButton;
-
-    @FXML
     private Label currentDay;
 
     //simulation
     SimulationEngine engine;
     Thread thread;
+    MapStats newStats;
 
     protected void drawMap(IWorldMap map){
         mapGridPane.getColumnConstraints().clear();
@@ -89,7 +88,7 @@ public class SimulationViewController implements IGuiObserver {
                 }
                 GuiElementBox guiElementBox;
                 try {
-                    guiElementBox = new GuiElementBox(obj, pos);
+                    guiElementBox = new GuiElementBox(obj, newStats);
                 } catch (FileNotFoundException exception) {
                     throw new RuntimeException(exception);
                 }
@@ -125,19 +124,21 @@ public class SimulationViewController implements IGuiObserver {
     public void generateSimulation(SimulationEngine engine){
         this.engine = engine;
         this.thread = new Thread(this.engine);
+        newStats = this.engine.getStats();
         this.thread.start();
-        drawMap(this.engine.getMap());
+        stop.setOnAction(e -> this.thread.suspend());
+        start.setOnAction(e -> this.thread.resume());
     }
 
     @Override
     public void positionChanged() {
         try {
             Platform.runLater(()->{
-                drawMap(this.engine.getMap());
-                MapStats newStats = this.engine.getStats();
+                newStats = this.engine.getStats();
                 changeStats(newStats.getCurrentDay(), newStats.getNumberOfAnimals(), newStats.getNumberOfGrass(), newStats.getEmptySpaces(), newStats.getMostPopularGenome(), newStats.getAverageEnergy(), newStats.getAverageDaysLived());
+                drawMap(this.engine.getMap());
             });
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException exception) {
             System.out.println(exception.getMessage());
         }

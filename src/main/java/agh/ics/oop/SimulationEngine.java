@@ -68,7 +68,6 @@ public class SimulationEngine implements Runnable {
                         observer.animalDied(animal.position());
                 }
                 dayOfAnimalsDeath.add(animal.getAge());
-                System.out.println("GOT ONE!");
                   map.deleteAnimal(animal);
                   animals.remove(animal);
             });

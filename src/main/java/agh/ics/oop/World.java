@@ -10,16 +10,16 @@ import java.util.Properties;
 public class World {
     public static void main(String[] args) {
 
-        Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = new FileInputStream("src/main/resources/config.txt");
-            prop.load(input);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        SimulationConfiguration currentConfiguration = OptionsParser.parse(prop);
-        System.out.println(currentConfiguration);
+//        Properties prop = new Properties();
+//        InputStream input = null;
+//        try {
+//            input = new FileInputStream("src/main/resources/config.txt");
+//            prop.load(input);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        SimulationConfiguration currentConfiguration = OptionsParser.parse(prop);
+//        System.out.println(currentConfiguration);
 //
 //        var engine = new SimulationEngine(currentConfiguration);
 //

@@ -12,6 +12,6 @@ energyToReproduction=20
 minMutations=1
 maxMutations=3
 mutationVariant=SLIGHT_CORRECTION
-genomesLength=10
+genomesLength=2
 behaviorVariant=CRAZY
 dailyEnergyCost=5

@@ -46,7 +46,6 @@
             <Label prefHeight="17.0" prefWidth="198.0" />
             <Button fx:id="stop" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" text="Stop simulation" />
             <Label prefHeight="17.0" prefWidth="198.0" />
-            <Button fx:id="newSimulationButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" text="New simulation" />
          </children>
       </VBox>
       <ScrollPane prefHeight="569.0" prefWidth="724.0">

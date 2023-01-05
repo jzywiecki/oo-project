@@ -1,4 +1,5 @@
 package agh.ics.oop.gui;
+import agh.ics.oop.MapStats;
 import agh.ics.oop.Vector2d;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.grass.Grass;
@@ -7,15 +8,18 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class GuiElementBox {
     private VBox content = new VBox();
+
     private Image image;
 
-    public GuiElementBox(Object object, Vector2d position) throws FileNotFoundException {
+    public GuiElementBox(Object object, MapStats stats) throws FileNotFoundException {
         Label label;
         if (object instanceof Animal animal){
             try {
@@ -33,6 +37,12 @@ public class GuiElementBox {
                 System.out.println(ex.getMessage());
             }
             label = new Label("Energy: " + animal.getEnergy());
+            if (Arrays.equals(animal.getGenomes(), stats.getMostPopularGenome())){
+                label.setTextFill(Color.color(1, 0, 0));
+            }
+            else{
+                label.setTextFill(Color.color(0, 0, 0));
+            }
         }
         else if (object instanceof Grass){
             try {
@@ -45,6 +55,8 @@ public class GuiElementBox {
         else{
             label = new Label("");
         }
+
+
 
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(20);

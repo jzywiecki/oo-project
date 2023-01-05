@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 
-abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     private final Map<Vector2d, LinkedList<Animal>> animalMap = new HashMap<>();
 
