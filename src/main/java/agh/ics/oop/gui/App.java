@@ -2,16 +2,13 @@ package agh.ics.oop.gui;
 
 import agh.ics.oop.SimulationConfiguration;
 import agh.ics.oop.SimulationEngine;
-import agh.ics.oop.interfaces.IWorldMap;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.*;
-import java.util.Properties;
 import agh.ics.oop.OptionsParser;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -24,11 +21,9 @@ public class App extends Application {
     private SimulationConfiguration currentConfiguration;
     private Button load;
     private FileChooser fileChooser;
-    private CheckBox checkBox;
     private Label configurationDescription;
     private Button startButton;
     private Label errorMessage;
-    private Label welcomeMessage;
     private Stage stage;
 
 
@@ -37,11 +32,11 @@ public class App extends Application {
         //menu
         stage = primaryStage;
         stage.setTitle("World simulation!");
-        welcomeMessage = new Label("Welcome to animal simulation!");
+        Label welcomeMessage = new Label("Welcome to animal simulation!");
         fileChooser = new FileChooser();
         load = new Button("Load Configuration");
         loadConfiguration(primaryStage);
-        checkBox = new CheckBox("Save stats to CSV");
+        CheckBox checkBox = new CheckBox("Save stats to CSV");
         checkBox.setIndeterminate(false);
         configurationDescription = new Label("");
         configurationDescription.setTextAlignment(TextAlignment.CENTER);
@@ -81,11 +76,13 @@ public class App extends Application {
             startButton.setOnAction(e -> {
                 errorMessage.setText("");
                 SimulationEngine engine = new SimulationEngine(currentConfiguration);
+
                 Scene scene;
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulationView.fxml"));
                     scene = new Scene(fxmlLoader.load(), 960, 569);
                     SimulationViewController viewController1 = fxmlLoader.getController();
+                    engine.addObserver(viewController1);
                     viewController1.generateSimulation(engine);
 
                 } catch (IOException ex) {

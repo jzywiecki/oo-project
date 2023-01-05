@@ -40,11 +40,21 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     @Override
     public LinkedList<IMapElement> objectsAt(Vector2d position) {
-        LinkedList<IMapElement> elements = new LinkedList<>(animalMap.get(position));
-        if(terrain.isGrassAt(position)){
-            elements.add(terrain.grassAt(position));
+        if(animalMap.get(position) != null){
+            LinkedList<IMapElement> elements = new LinkedList<>(animalMap.get(position));
+            if(terrain.isGrassAt(position)){
+                elements.add(terrain.grassAt(position));
+            }
+            return elements;
         }
-        return elements;
+        if(terrain.grassAt(position) != null){
+            LinkedList<IMapElement> grass =  new LinkedList<>();
+            grass.add(terrain.grassAt(position));
+            return grass;
+        }
+
+        return null;
+
     }
 
     @Override

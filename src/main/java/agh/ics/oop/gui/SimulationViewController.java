@@ -2,6 +2,7 @@ package agh.ics.oop.gui;
 
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.Vector2d;
+import agh.ics.oop.interfaces.IMapElement;
 import agh.ics.oop.interfaces.IWorldMap;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -72,17 +73,23 @@ public class SimulationViewController implements IGuiObserver{
     Thread thread;
 
     protected void drawMap(IWorldMap map){
+        this.mapGridPane = new GridPane();
         for (int i = 0; i < map.getUpperBound().x(); i++){
             for (int j = 0; j < map.getUpperBound().y(); j++){
                 Vector2d pos = new Vector2d(i, j);
-                var obj = map.objectAt(pos);
+                IMapElement obj = null;
+                if(map.objectsAt(pos) != null){
+                    obj = map.objectsAt(pos).getFirst();
+                }
                 GuiElementBox guiElementBox;
                 try {
                     guiElementBox = new GuiElementBox(obj, pos);
                 } catch (FileNotFoundException exception) {
                     throw new RuntimeException(exception);
                 }
+
                 VBox vbox = guiElementBox.getContent();
+
                 this.mapGridPane.add(vbox, i, j);
                 GridPane.setHalignment(vbox, HPos.CENTER);
                 }
@@ -122,7 +129,7 @@ public class SimulationViewController implements IGuiObserver{
                 drawMap(this.engine.getMap());
                 System.out.println("Moved animal");
             });
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException exception) {
             System.out.println(exception.getMessage());
         }

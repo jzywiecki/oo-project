@@ -1,15 +1,14 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.behavior.BitOfMadness;
 import agh.ics.oop.behavior.FullPredestination;
-import agh.ics.oop.interfaces.IBehaviorGenerator;
+import agh.ics.oop.gui.IGuiObserver;
+import agh.ics.oop.interfaces.*;
 import agh.ics.oop.animal.AnimalComparator;
-import agh.ics.oop.interfaces.IGrassGenerator;
-import agh.ics.oop.interfaces.IReproduction;
-import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.map.*;
 import agh.ics.oop.reproduction.FullRandomness;
 import agh.ics.oop.reproduction.SlightCorrection;
@@ -24,6 +23,8 @@ public class SimulationEngine implements Runnable {
     private IGrassGenerator terrain;
     private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
+
+    private final ArrayList<IGuiObserver> observerList = new ArrayList<>();
 
     public SimulationEngine(SimulationConfiguration configuration){
         this.configuration = configuration;
@@ -58,13 +59,20 @@ public class SimulationEngine implements Runnable {
             deadAnimals.forEach(animal -> {
               map.deleteAnimal(animal);
               animals.remove(animal);
-              System.out.println("GOT ONE!");
             });
            //phase 2 movement and energy loss
            animals.forEach(animal -> {
                animal.move();
                animal.subtractEnergy(configuration.dailyEnergyCost());
+
            });
+           for (IGuiObserver observer : observerList) {
+               try {
+                   observer.positionChanged();
+               } catch (InterruptedException e) {
+                   throw new RuntimeException(e);
+               }
+           }
            System.out.println(map);
 
 
@@ -120,5 +128,14 @@ public class SimulationEngine implements Runnable {
 
     public IWorldMap getMap() {
         return map;
+    }
+
+
+    public void addObserver(IGuiObserver observer){
+        observerList.add(observer);
+    }
+
+    public void removeObserver(IGuiObserver observer){
+        observerList.remove(observer);
     }
 }

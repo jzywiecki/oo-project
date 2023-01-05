@@ -4,6 +4,8 @@ import agh.ics.oop.animal.Animal;
 import agh.ics.oop.grass.Grass;
 import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.Vector2d;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public interface IWorldMap {
@@ -28,7 +30,7 @@ public interface IWorldMap {
 
     IMapElement objectAt(Vector2d position);
 
-    List<IMapElement> objectsAt(Vector2d position);
+    LinkedList<IMapElement> objectsAt(Vector2d position);
 
     /**
      * Move animal in given direction
