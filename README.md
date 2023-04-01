@@ -58,3 +58,5 @@ GENE BEHAVIOR: BitOfMadness, FullPredestination;
 
 <img width="963" alt="Zrzut ekranu 2023-04-2 o 01 29 03" src="https://user-images.githubusercontent.com/105950890/229322707-25221e68-435f-4ed1-ab4e-f04cf01c6a1a.png">
 
+### Unfinished:
+- Single animal stats
