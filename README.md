@@ -1,8 +1,8 @@
 # oo-project
 
-A large two-person project
-Technologies: Java 17, JavaFX, JUnit
-Tools: SceneBuilder, IntelliJ
+A large two-person project<br/>
+Technologies: Java 17, JavaFX, JUnit<br/>
+Tools: SceneBuilder, IntelliJ<br/>
 Project description in Polish: https://github.com/apohllo/obiektowe-lab/blob/master/proj1/Readme.md
 
 ## Short description:
