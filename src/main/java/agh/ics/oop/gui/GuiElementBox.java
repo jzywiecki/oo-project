@@ -57,7 +57,6 @@ public class GuiElementBox {
         }
 
 
-
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(20);
         imageView.setFitHeight(20);
@@ -65,6 +64,8 @@ public class GuiElementBox {
         content.getChildren().add(label);
         content.setAlignment(Pos.CENTER);
     }
+
+
 
     public VBox getContent() {
         return this.content;

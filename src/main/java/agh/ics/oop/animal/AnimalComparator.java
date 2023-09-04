@@ -5,37 +5,28 @@ import java.util.Random;
 
 public class AnimalComparator implements Comparator<Animal> {
 
+    /**
+     *
+     * @param animal1 the first object to be compared.
+     * @param animal2 the second object to be compared.
+     * @return stronger animal
+     */
 
-    //returns stronger animal
     public int compare(Animal animal1, Animal animal2){
-        //energia
-        if (animal1.getEnergy() > animal2.getEnergy()){
-            return animal1.getEnergy()-animal2.getEnergy();
-        }
-        if (animal2.getEnergy() > animal1.getEnergy()){
+
+        if (animal1.getEnergy() - animal2.getEnergy() != 0){
             return animal1.getEnergy()-animal2.getEnergy();
         }
 
-        //wiek
-        if (animal1.getAge() > animal2.getAge()){
-            return animal1.getAge() - animal2.getAge();
-        }
-        if (animal2.getAge() > animal1.getAge()){
+        if (animal1.getAge() - animal2.getAge() != 0){
             return animal1.getAge() - animal2.getAge();
         }
 
-        //ilosc dzieci
-        if (animal1.getNumberOfChildren() > animal2.getNumberOfChildren()){
-            return animal1.getNumberOfChildren() - animal2.getNumberOfChildren();
-        }
-        if (animal2.getNumberOfChildren() > animal1.getNumberOfChildren()){
+        if (animal1.getNumberOfChildren() - animal2.getNumberOfChildren() != 0){
             return animal1.getNumberOfChildren() - animal2.getNumberOfChildren();
         }
 
-        //wybor losowy
         int[] animals = new int[]{-1, 1};
-        return animals[new Random().nextInt(animals.length)];
+        return animals[new Random().nextInt(2)];
     }
-
-
 }

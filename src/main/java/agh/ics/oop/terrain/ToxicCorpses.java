@@ -39,9 +39,7 @@ public class ToxicCorpses extends AbstractTerrain implements IDeathObserver {
         set.stream()
                 .filter(element -> element.numberOfDead == oldDeaths)
                 .findAny()
-                .ifPresent(element ->{
-                    element.positions().remove(position);
-                });
+                .ifPresent(element -> element.positions().remove(position));
 
         set.stream()
                 .filter(element -> element.numberOfDead == oldDeaths + 1)

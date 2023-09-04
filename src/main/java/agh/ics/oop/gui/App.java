@@ -79,7 +79,7 @@ public class App extends Application {
                 System.out.println(this.checkBox);
                 SimulationEngine engine = new SimulationEngine(currentConfiguration, this.checkBox.isSelected());
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulationView.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/simulationView.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 960, 569);
                     SimulationViewController viewController1 = fxmlLoader.getController();
                     engine.addObserver(viewController1);

@@ -24,14 +24,13 @@ public class SlightCorrection extends AbstractReproduction {
         }
         Collections.shuffle(genomes);
 
-        for (int i = 0; i < mutationsNumber; i++) {
+        for (int i = 0; i < mutationsNumber - 1; i++) {
             if(rng.nextInt(2) == 0){
                 genome[genomes.get(i)] += 1;
             }
             else{
                 genome[genomes.get(i)] -= 1;
             }
-
         }
         return genome;
     }

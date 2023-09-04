@@ -66,7 +66,5 @@ public class OptionsParser {
             behaviorVariant,
             Integer.parseInt(props.getProperty("dailyEnergyCost"))
         );
-
-
     }
 }

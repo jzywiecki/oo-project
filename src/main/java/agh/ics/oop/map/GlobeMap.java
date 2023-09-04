@@ -10,7 +10,6 @@ public class GlobeMap extends AbstractWorldMap {
         super(configuration, terrain);
     }
 
-
     @Override
     public Vector2d moveAnimal(Animal animal, MapDirection direction) {
 

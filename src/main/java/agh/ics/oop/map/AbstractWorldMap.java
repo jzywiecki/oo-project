@@ -14,24 +14,12 @@ import java.util.LinkedList;
 import java.util.Map;
 
 
-abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
-
-    private final Map<Vector2d, LinkedList<Animal>> animalMap = new HashMap<>();
-
-    @Override
-    public Vector2d getUpperBound() {
-        return upperBound;
-    }
-
-    @Override
-    public Vector2d getLowerBound() {
-        return lowerBound;
-    }
-
-    protected final Vector2d upperBound;
-    protected final Vector2d lowerBound = new Vector2d(0, 0);
-    protected final SimulationConfiguration configuration;
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     private final IGrassGenerator terrain;
+    protected final Vector2d upperBound;
+    protected final SimulationConfiguration configuration;
+    private final Map<Vector2d, LinkedList<Animal>> animalMap = new HashMap<>();
+    protected final Vector2d lowerBound = new Vector2d(0, 0);
 
     public AbstractWorldMap(SimulationConfiguration configuration, IGrassGenerator terrain) {
         this.upperBound = configuration.bounds();
@@ -55,7 +43,6 @@ abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         }
 
         return null;
-
     }
 
     @Override
@@ -98,7 +85,6 @@ abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         }
     }
 
-    //get grass at specific position
     public Grass getGrassAtPosition(Vector2d position){
         return terrain.grassAt(position);
     }
@@ -135,11 +121,18 @@ abstract class  AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     }
 
     @Override
+    public Vector2d getUpperBound() {
+        return upperBound;
+    }
+
+    @Override
+    public Vector2d getLowerBound() {
+        return lowerBound;
+    }
+
+    @Override
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
         return map.draw(lowerBound, upperBound.subtract(new Vector2d(1, 1)));
     }
-
-
-
 }

@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import agh.ics.oop.animal.Animal;
 import agh.ics.oop.behavior.BitOfMadness;
@@ -21,13 +22,11 @@ public class SimulationEngine implements Runnable {
     private IBehaviorGenerator behavior;
     private IReproduction reproduction;
     private IGrassGenerator terrain;
-    private final LinkedList<Animal> animals = new LinkedList<>();
     private final SimulationConfiguration configuration;
     private MapStats mapStats;
-    private final LinkedList<Integer> dayOfAnimalsDeath = new LinkedList<Integer>();
     private boolean csv;
-
-
+    private final LinkedList<Animal> animals = new LinkedList<>();
+    private final LinkedList<Integer> dayOfAnimalsDeath = new LinkedList<Integer>();
     private final ArrayList<IGuiObserver> iGuiObservers = new ArrayList<>();
     private final ArrayList<IDeathObserver> iDeathObservers = new ArrayList<>();
 
@@ -51,7 +50,7 @@ public class SimulationEngine implements Runnable {
         }
         switch (configuration.mutation()){
             case SLIGHT_CORRECTION -> this.reproduction = new SlightCorrection(this.map, this.behavior, this.configuration);
-            case RANDOM -> this.reproduction =new FullRandomness(this.map, this.behavior, this.configuration);
+            case RANDOM -> this.reproduction = new FullRandomness(this.map, this.behavior, this.configuration);
         }
     }
 
@@ -59,7 +58,7 @@ public class SimulationEngine implements Runnable {
    public void run() {
        //initialize
        generateAnimals(configuration.numberOfAnimals());
-       mapStats = new MapStats(this.configuration, this);
+       mapStats = new MapStats(this);
        System.out.println(map);
         //simulation
        for (int i = 0; i< 40; i++) {
@@ -115,7 +114,7 @@ public class SimulationEngine implements Runnable {
            // phase 5 grass growth
             terrain.placeGrasses();
 
-            this.mapStats.update(this, configuration);
+            this.mapStats.update();
        }
     }
 
@@ -148,7 +147,7 @@ public class SimulationEngine implements Runnable {
         return terrain;
     }
 
-    public LinkedList<Animal> getAnimals() {
+    public List<Animal> getAnimals() {
         return animals;
     }
 

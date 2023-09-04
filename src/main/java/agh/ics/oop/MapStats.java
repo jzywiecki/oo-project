@@ -9,56 +9,50 @@ public class MapStats {
     private int numberOfAnimals;
     private int numberOfGrass;
     private int[] mostPopularGenome;
-    private int averageDaysLived;
     private int emptySpaces;
     private int averageEnergy;
-    private int currentDay;
+    private final SimulationEngine simulationEngine;
+    private int currentDay = 0;
+    private int averageDaysLived = 0;
 
-    public MapStats(SimulationConfiguration config, SimulationEngine engine) {
-        this.currentDay = 0;
-        this.numberOfAnimals = engine.getAnimals().size();
-        this.numberOfGrass = config.startingGrass();
-        this.emptySpaces = calculateEmptySpaces(engine);
-        this.mostPopularGenome = calculateMostPopularGenome(engine, config);
-        this.averageDaysLived = 0;
-        this.averageEnergy = calculateAverageEnergy(engine);
+    public MapStats(SimulationEngine simulationEngine) {
+        this.simulationEngine = simulationEngine;
+        update();
     }
 
-    private int[] calculateMostPopularGenome(SimulationEngine engine, SimulationConfiguration configuration){
-        Object[] animals = engine.getAnimals().toArray();
-        int[][] animalsGenomes = new int[animals.length][configuration.genomesLength()];
-        for (int i = 0; i < animals.length; i++){
-            Animal animal = (Animal) animals[i];
-            animalsGenomes[i] = animal.getGenomes();
-        }
-        int[] counter = new int[animals.length];
-        for (int i = 0; i < animalsGenomes.length; i++){
-            for (int j = 0; j < animalsGenomes.length; j++){
-                if (!(i==j)){
-                    if (Arrays.equals(animalsGenomes[i], animalsGenomes[j])){
-                        counter[i]++;
-                        counter[j]++;
-                    }
-                }
-            }
-        }
-        int mostPopularGenomeNumber = Arrays.stream(counter).max().getAsInt();
-        int[] answer = new int[configuration.genomesLength()];
-        for (int i = 0; i < counter.length; i++){
-            if (counter[i] == mostPopularGenomeNumber){
-                answer = animalsGenomes[i];
-            }
-        }
-        return answer;
+    public void update(){
+        this.currentDay += 1;
+        this.numberOfAnimals = simulationEngine.getAnimals().size();
+        this.numberOfGrass = simulationEngine.getTerrain().getGrass().size();
+        this.emptySpaces = calculateEmptySpaces();
+        this.mostPopularGenome = calculateMostPopularGenome();
+        this.averageDaysLived = calculateAverageDaysLived();
+        this.averageEnergy = calculateAverageEnergy();
     }
 
-    private int calculateEmptySpaces(SimulationEngine engine){
-        IWorldMap map = engine.getMap();
+    private int[] calculateMostPopularGenome(){
+        List<Animal> animals = simulationEngine.getAnimals();
+        Map<List<Integer>, Integer> genomeCounts = new HashMap<>();
+
+        for (Animal animal : animals) {
+            List<Integer> genomeList = Arrays.stream(animal.getGenomes()).boxed().toList();
+            genomeCounts.put(genomeList, genomeCounts.getOrDefault(genomeList, 0) + 1);
+        }
+
+        Map.Entry<List<Integer>, Integer> mostPopularEntry = Collections.max(
+                genomeCounts.entrySet(), Map.Entry.comparingByValue()
+        );
+
+        return mostPopularEntry.getKey().stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    private int calculateEmptySpaces(){
+        IWorldMap map = simulationEngine.getMap();
         int counter = 0;
         for (int i = 0; i < map.getUpperBound().x(); i++){
             for (int j = 0; j < map.getUpperBound().y(); j++){
                 if (!map.isOccupied(new Vector2d(i, j))){
-                    counter++;
+                    counter += 1;
                 }
             }
         }
@@ -66,27 +60,19 @@ public class MapStats {
     }
 
 
-    private int calculateAverageEnergy(SimulationEngine engine){
-        return (engine.getAnimals().stream().reduce(0, (subtotal, animal) -> subtotal + animal.getEnergy(), Integer::sum)/engine.getAnimals().size());
+    private int calculateAverageEnergy(){
+        return simulationEngine.getAnimals()
+                      .stream()
+                      .reduce(0, (subtotal, animal) -> subtotal + animal.getEnergy(), Integer::sum)/simulationEngine.getAnimals().size();
     }
 
-    public int calculateAverageDaysLived(SimulationEngine engine){
-        if (engine.getDayOfAnimalsDeath().size() > 0) {
-            return engine.getDayOfAnimalsDeath().stream().reduce(0, Integer::sum) / engine.getDayOfAnimalsDeath().size();
+    public int calculateAverageDaysLived(){
+        if (simulationEngine.getDayOfAnimalsDeath().size() > 0) {
+            return simulationEngine.getDayOfAnimalsDeath().stream().reduce(0, Integer::sum) / simulationEngine.getDayOfAnimalsDeath().size();
         }
         else{
             return 0;
         }
-    }
-
-    public void update(SimulationEngine engine, SimulationConfiguration config){
-        this.currentDay +=1;
-        this.numberOfAnimals = engine.getAnimals().size();
-        this.numberOfGrass = engine.getTerrain().getGrass().size();
-        this.emptySpaces = calculateEmptySpaces(engine);
-        this.mostPopularGenome = calculateMostPopularGenome(engine, config);
-        this.averageDaysLived = calculateAverageDaysLived(engine);
-        this.averageEnergy = calculateAverageEnergy(engine);
     }
 
     public int getAverageDaysLived() {
@@ -96,8 +82,6 @@ public class MapStats {
     public int getCurrentDay() {
         return currentDay;
     }
-
-
 
     public int getAverageEnergy() {
         return averageEnergy;
