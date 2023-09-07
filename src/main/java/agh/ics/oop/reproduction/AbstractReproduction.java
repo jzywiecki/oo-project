@@ -12,9 +12,9 @@ import java.util.Random;
 
 
 public abstract class AbstractReproduction implements IReproduction {
-    IWorldMap map;
-    IBehaviorGenerator behavior;
-    SimulationConfiguration config;
+    protected IWorldMap map;
+    protected IBehaviorGenerator behavior;
+    protected SimulationConfiguration config;
 
     public AbstractReproduction(IWorldMap map, IBehaviorGenerator behavior, SimulationConfiguration config) {
         this.behavior = behavior;

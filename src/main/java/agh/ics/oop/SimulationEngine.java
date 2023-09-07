@@ -61,7 +61,7 @@ public class SimulationEngine implements Runnable {
        mapStats = new MapStats(this);
        System.out.println(map);
         //simulation
-       for (int i = 0; i< 40; i++) {
+       for (int i = 0; i< 4000; i++) {
            //phase 1 dead cleanup
           var deadAnimals = animals.stream().filter(animal -> animal.getEnergy() <= 0).toList();
             deadAnimals.forEach(animal -> {

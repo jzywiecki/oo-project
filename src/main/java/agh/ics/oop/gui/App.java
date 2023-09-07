@@ -58,11 +58,19 @@ public class App extends Application {
         configurationDescription.setText(currentConfiguration.toString());
     }
 
+    private void setErrorMessage(String message){
+        errorMessage.setText(message);
+    }
+
     //wczytanie konfiguracji
     private void loadConfiguration(Stage primaryStage) throws RuntimeException {
         load.setOnAction(e -> {
             File configFile = fileChooser.showOpenDialog(primaryStage);
-            currentConfiguration = OptionsParser.parseFile(configFile);
+            try{
+                currentConfiguration = OptionsParser.parseFile(configFile);
+            }catch (IllegalArgumentException err){
+                setErrorMessage(err.getMessage());
+            }
             System.out.println(currentConfiguration);
             showCurrentConfig();
             startSimulation();
@@ -72,7 +80,7 @@ public class App extends Application {
     //start symulacji
     private void startSimulation() throws RuntimeException{
         if (currentConfiguration == null) {
-            startButton.setOnAction(e -> errorMessage.setText("Brak wczytanej konfiguracji!"));
+            startButton.setOnAction(e -> setErrorMessage("Brak wczytanej konfiguracji!"));
         } else {
             startButton.setOnAction(e -> {
                 errorMessage.setText("");

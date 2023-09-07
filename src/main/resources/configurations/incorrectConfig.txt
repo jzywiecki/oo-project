@@ -1,0 +1,17 @@
+height=10
+width=10
+mapVariant=GLOBE_MAP
+startingGrass=50
+grassEnergy=40
+grassGrowth=10
+grassVariant=DEAD
+numberOfAnimals=100
+startingEnergy=80
+reproductionRequirement=100
+energyToReproduction=30
+minMutations=1
+maxMutations=4
+mutationVariant=SLIGHT_CORRECTIO
+genomesLength=3
+behaviorVariant=CRAZY
+dailyEnergyCost=5
